@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.csgg</groupId>
+    <artifactId>csgg</artifactId>
+    <version>1.0</version>
+  </parent>
+  <groupId>com.csgg.domain</groupId>
+  <artifactId>csgg_domain</artifactId>
+  <version>1.0</version>
+  <name>csgg_domain</name>
+  <url>http://maven.apache.org</url>
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>com.csgg.comm</groupId>
+      <artifactId>csgg_comm</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.csgg.db</groupId>
+      <artifactId>csgg_db</artifactId>
+    </dependency>
+    
+  </dependencies>
+  
+</project>
