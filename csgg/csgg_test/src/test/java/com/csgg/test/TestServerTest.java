@@ -27,4 +27,8 @@ public class TestServerTest extends TestRemoteBase {
 //		Assert.assertTrue(result.isSuccess());
 		System.out.println(result);
 	}
+	
+	public static void main(String[] args) {
+		new TestServerTest().testTestS();
+	}
 }
