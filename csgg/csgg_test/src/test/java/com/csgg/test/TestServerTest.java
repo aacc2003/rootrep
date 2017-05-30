@@ -3,10 +3,6 @@ package com.csgg.test;
 
 import javax.annotation.Resource;
 
-import junit.framework.Assert;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.csgg.service.api.TestServer;
 import com.csgg.test.base.TestRemoteBase;
 

@@ -1,0 +1,26 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xmlns:http-conf="http://cxf.apache.org/transports/http/configuration"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://cxf.apache.org/jaxws 
+						http://cxf.apache.org/schemas/jaxws.xsd
+						http://cxf.apache.org/transports/http/configuration
+						http://cxf.apache.org/schemas/configuration/http-conf.xsd
+						http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	<bean id="performer" class="com.csgg.test.aop.spring.xml.Performer"></bean>
+	<bean id="audienceAspect" class="com.csgg.test.aop.spring.xml.AudienceAspect"></bean>
+	
+	<!-- aop -->
+	<aop:config>
+		<aop:aspect ref="audienceAspect">
+			<aop:before method="takeSeats" pointcut="execution(* com.csgg.test.aop.spring.xml.Performer.perform(..))"/>
+			<aop:before method="turnOffCellPhones" pointcut="execution(* com.csgg.test.aop.spring.xml.Performer.perform(..))"/>
+			<aop:after-returning method="applaud" pointcut="execution(* com.csgg.test.aop.spring.xml.Performer.perform(..))"/>
+			<aop:after-throwing method="demandRefund" pointcut="execution(* com.csgg.test.aop.spring.xml.Performer.perform(..))"/>
+		</aop:aspect>
+	</aop:config>
+</beans>
