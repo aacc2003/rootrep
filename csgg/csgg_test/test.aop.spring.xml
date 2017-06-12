@@ -15,6 +15,7 @@
 	<bean id="audienceAspect" class="com.csgg.test.aop.spring.xml.AudienceAspect"></bean>
 	
 	<!-- aop -->
+	<!-- 
 	<aop:config>
 		<aop:aspect ref="audienceAspect">
 			<aop:before method="takeSeats" pointcut="execution(* com.csgg.test.aop.spring.xml.Performer.perform(..))"/>
@@ -23,4 +24,28 @@
 			<aop:after-throwing method="demandRefund" pointcut="execution(* com.csgg.test.aop.spring.xml.Performer.perform(..))"/>
 		</aop:aspect>
 	</aop:config>
+	 -->
+	 <!-- 
+	 <aop:config>
+		<aop:aspect ref="audienceAspect">
+			<aop:pointcut expression="execution(* com.csgg.test.aop.spring.xml.Performer.perform(..))" id="performance"/>
+			<aop:before method="takeSeats" pointcut-ref="performance" />
+			<aop:before method="turnOffCellPhones" pointcut-ref="performance" />
+			<aop:after-returning method="applaud" pointcut-ref="performance" />
+			<aop:after-throwing method="demandRefund" pointcut-ref="performance" />
+		</aop:aspect>
+	</aop:config>
+	 -->
+	<aop:config>
+		<aop:aspect ref="audienceAspect">
+		<!-- identified for aspect(AudienceAspect),  be independent of Performer -->
+			<aop:pointcut expression="execution(* com.csgg.test.aop.spring.xml.Performer.perform(..)) and args(performerSound,audienceSound)" id="performanceArgs"/>
+			<aop:pointcut expression="execution(* com.csgg.test.aop.spring.xml.Performer.perform(..)) " id="performance"/>
+			<aop:before method="takeSeats" pointcut-ref="performance" />
+			<aop:before method="turnOffCellPhones" pointcut-ref="performanceArgs" arg-names="performerSound,audienceSound"/>
+			<aop:after-returning method="applaud" pointcut-ref="performance" />
+			<aop:after-throwing method="demandRefund" pointcut-ref="performance" />
+		</aop:aspect>
+	</aop:config>
+	 
 </beans>

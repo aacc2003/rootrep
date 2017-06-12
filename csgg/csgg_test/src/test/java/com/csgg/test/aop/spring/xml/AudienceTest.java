@@ -10,6 +10,7 @@ public class AudienceTest {
 //				"D:/programmes/workspace_self/rootrep/csgg/csgg_test/src/main/resources/spring/test.aop.spring.xml");
 		ApplicationContext ctx = new FileSystemXmlApplicationContext("test.aop.spring.xml");
 		Performer p = ctx.getBean("performer", Performer.class);
-		p.perform();
+//		p.perform("lalalala");
+		p.perform("lalalala", "oh good");
 	}
 }

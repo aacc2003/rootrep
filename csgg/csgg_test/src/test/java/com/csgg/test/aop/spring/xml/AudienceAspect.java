@@ -6,7 +6,7 @@ public class AudienceAspect {
 		System.out.println("the audience is taking their seats");
 	}
 	
-	public void turnOffCellPhones() {
+	public void turnOffCellPhones(String performerSound, String audienceSound) {
 		System.out.println("the audience is turning off their cellphone");
 	}
 	
