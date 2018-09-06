@@ -7,7 +7,7 @@ public class AudienceAspect {
 	}
 	
 	public void turnOffCellPhones(String performerSound, String audienceSound) {
-		System.out.println("the audience is turning off their cellphone");
+		System.out.println("the audience is turning off their cellphone  \n\t"+performerSound+"\t"+audienceSound);
 	}
 	
 	public void applaud() {
