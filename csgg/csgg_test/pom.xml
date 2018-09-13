@@ -17,11 +17,14 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
   
+
   <dependencies>
+    <!-- 
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
     </dependency>
+     -->
     
     <dependency>
       <groupId>com.csgg.busi</groupId>
@@ -29,6 +32,7 @@
     </dependency>
 
 		<!-- test scope -->
+		<!-- 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -47,6 +51,7 @@
 			<artifactId>junit</artifactId>
 			<scope>test</scope>
 		</dependency>
+		 -->
     
   </dependencies>
 </project>

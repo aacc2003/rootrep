@@ -4,13 +4,13 @@ package com.csgg.test;
 import javax.annotation.Resource;
 
 import com.csgg.service.api.TestServer;
-import com.csgg.test.base.TestRemoteBase;
+import com.csgg.test.base.TestBase;
 
 /**
  * @author Administrator
  *
  */
-public class TestServerTest extends TestRemoteBase {
+public class TestServerTest extends TestBase {
 //public class TestServerTest {
 
 	@Resource(name="testServerCxf")
