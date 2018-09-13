@@ -27,8 +27,8 @@
      -->
     
     <dependency>
-      <groupId>com.csgg.busi</groupId>
-      <artifactId>csgg_busi</artifactId>
+      <groupId>com.csgg.controler</groupId>
+  		<artifactId>csgg_controler</artifactId>
     </dependency>
 
 		<!-- test scope -->
@@ -53,5 +53,9 @@
 		</dependency>
 		 -->
     
+    	<dependency>
+           <groupId>com.github.kevinsawicki</groupId>
+           <artifactId>http-request</artifactId>
+        </dependency>
   </dependencies>
 </project>
