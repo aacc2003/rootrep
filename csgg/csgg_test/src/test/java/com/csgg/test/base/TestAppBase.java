@@ -14,10 +14,12 @@ import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.csgg.ui.CsggBootMain;
+
 /**
  */
 //@SpringApplicationConfiguration(classes = Main.class)
-@SpringBootTest(classes = Main.class)
+@SpringBootTest(classes = CsggBootMain.class)
 public class TestAppBase extends TestWebBase {
 	
 	protected final Logger			logger								= LoggerFactory

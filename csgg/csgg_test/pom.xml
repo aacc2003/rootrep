@@ -27,8 +27,8 @@
      -->
     
     <dependency>
-      <groupId>com.csgg.controler</groupId>
-  		<artifactId>csgg_controler</artifactId>
+      <groupId>com.csgg.ui</groupId>
+  		<artifactId>csgg_ui</artifactId>
     </dependency>
 
 		<!-- test scope -->
