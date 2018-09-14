@@ -6,21 +6,19 @@ import javax.servlet.ServletContext;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
-import org.springframework.context.EnvironmentAware;
-import org.springframework.core.env.Environment;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.context.ServletContextAware;
 
+import com.github.kevinsawicki.http.HttpRequest;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 /**
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@IntegrationTest("server.port:0")
-@WebIntegrationTest
+//@IntegrationTest("server.port:0") //  org.springframework.boot.test.IntegrationTest;   tomcat的随机启动端口    网上有个@WebIntegrationTest
 @WebAppConfiguration
 public class TestWebBase extends TestBase implements ServletContextAware {
 	
