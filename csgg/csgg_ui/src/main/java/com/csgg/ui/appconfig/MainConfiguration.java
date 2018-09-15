@@ -1,4 +1,4 @@
-package com.csgg.ui;
+package com.csgg.ui.appconfig;
 
 import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
 import org.springframework.context.annotation.Bean;

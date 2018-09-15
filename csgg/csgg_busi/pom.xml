@@ -42,5 +42,11 @@
       <artifactId>csgg_comm</artifactId>
     </dependency>
     
+    <!-- apache dubbo -->
+    <dependency>
+       <groupId>com.alibaba.spring.boot</groupId>
+        <artifactId>dubbo-spring-boot-starter</artifactId>
+    </dependency>
+    
   </dependencies>
 </project>
