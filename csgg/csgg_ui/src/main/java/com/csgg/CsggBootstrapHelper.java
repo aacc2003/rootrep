@@ -1,4 +1,4 @@
-package com.csgg.ui;
+package com.csgg;
 
 /*
  * 修订记录:

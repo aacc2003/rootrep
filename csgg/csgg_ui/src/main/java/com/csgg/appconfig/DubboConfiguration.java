@@ -1,4 +1,4 @@
-package com.csgg.ui.appconfig;
+package com.csgg.appconfig;
 
 import java.util.Map;
 
@@ -31,10 +31,11 @@ public class DubboConfiguration implements InitializingBean{
 	
 	@Bean
 	public static ApplicationConfig applicationConfig() {
-
+System.out.println("-------------");
 		ApplicationConfig config = new ApplicationConfig();
 		config.setName("csgg");
 		config.setOwner("wanglei");
+		
 		return config;
 	}
 	
@@ -43,7 +44,8 @@ public class DubboConfiguration implements InitializingBean{
 	public static RegistryConfig registryConfig() {
 
 		RegistryConfig config = new RegistryConfig();
-		config.setProtocol("zookeeper");
+//		config.setProtocol("zookeeper");
+		config.setProtocol("dubbo");
 		
 		config.setRegister(true);
 		config.setAddress("zookeeper://127.0.0.1:2181");
@@ -58,7 +60,7 @@ public class DubboConfiguration implements InitializingBean{
 
 		ProtocolConfig config = new ProtocolConfig();
 		config.setName("dubbo");
-		config.setPort(20912);
+		config.setPort(20880);
 		
 //		config.setThreadpool("yijiDubbo");
 		config.setThreads(200);
