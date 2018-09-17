@@ -9,13 +9,14 @@
 
 
      <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="csgg" owner="wanglei" organization="hexin" logger="slf4j"/>
+    <!-- <dubbo:application name="csgg" owner="wanglei" organization="hexin" logger="slf4j"/> -->
+    <dubbo:application name="csgg" owner="wanglei" organization="hexin" />
 
 <!--     使用multicast广播注册中心暴露服务地址 -->
 <!--<dubbo:registry address="multicast://224.5.6.7:1234" />-->
 
  <!-- 使用zk广播注册中心暴露服务地址 -->
-    <dubbo:registry  address="192.168.71.42:2181"  protocol="zookeeper" register="true" 
+    <dubbo:registry  address="127.0.0.1:2181"  protocol="zookeeper" register="true" 
     	file = "/var/csgg/"/>
 
     <!-- 用dubbo协议在20880端口暴露服务 -->
