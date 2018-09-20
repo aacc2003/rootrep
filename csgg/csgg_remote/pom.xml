@@ -29,7 +29,7 @@
     <!-- apache dubbo -->
     <dependency>
         <groupId>com.alibaba.spring.boot</groupId>
-        <artifactId>spring-boot-starter-dubbo</artifactId>
+        <artifactId>dubbo-spring-boot-starter</artifactId>
     </dependency>
 
 <!-- 说是dubbo2.6以后的zk客户端 -->

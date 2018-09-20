@@ -12,9 +12,9 @@ public class CsggBootMain {
 	
 	public static void main(final String[] args) {
 		ConfigurableApplicationContext  context = SpringApplication.run(CsggBootMain.class, args);
-		 String str1=context.getEnvironment().getProperty("spring.dubbo.application.name");
-//		 Object o = context.getBean("TestServer");
-			System.out.println("--------"+str1);
+		 String str1=context.getEnvironment().getProperty("spring.application.name");
+		 Object o = context.getBean("testS");
+			System.out.println(o+"--------"+str1);
 			
 	}
 	

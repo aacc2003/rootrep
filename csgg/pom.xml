@@ -84,21 +84,24 @@
 -->
     <dependency>
         <groupId>com.alibaba.spring.boot</groupId>
-        <artifactId>spring-boot-starter-dubbo</artifactId>
-        <version>1.0.0</version>
-	<!--<version>2.0.0</version>-->
+        <artifactId>dubbo-spring-boot-starter</artifactId>
+       <!-- <version>1.0.0</version> -->
+			<version>2.0.0</version>
+			<!--
 	<exclusions>
 		<exclusion>
                         <groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
                 </exclusion>
 	</exclusions>
+	-->
     </dependency>
-	<dependency>
+	<!--<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
 			<version>2.5.3</version>
 		</dependency>
+		-->
 	<dependency>
 		    <groupId>org.apache.zookeeper</groupId>
 		    <artifactId>zookeeper</artifactId>

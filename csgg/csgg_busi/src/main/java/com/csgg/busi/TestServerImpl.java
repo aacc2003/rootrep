@@ -15,7 +15,7 @@ import com.csgg.service.api.TestServer;
  */
 //@WebService(endpointInterface = "com.csgg.service.api.TestServer")
 @Service(version="1.0", interfaceClass = TestServer.class)
-@Component
+@Component("testS")
 public class TestServerImpl implements TestServer
 {
 	Logger logger = LoggerFactory.getLogger("CSGG");
