@@ -31,6 +31,13 @@
         <groupId>com.alibaba.spring.boot</groupId>
         <artifactId>dubbo-spring-boot-starter</artifactId>
     </dependency>
+     
+     <!-- 
+     <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>dubbo</artifactId>
+     </dependency>
+      -->
 
 <!-- 说是dubbo2.6以后的zk客户端 -->
 <!-- 	
