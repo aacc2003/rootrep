@@ -15,7 +15,8 @@ public class CsggBootMain {
 		 String str1=context.getEnvironment().getProperty("spring.application.name");
 //		 Object o = context.getBean("testS");
 		 Object o = context.getBean("tvProductFactory");
-			System.out.println(o.getClass().getName()+"--------"+str1);  //结果com.csgg.busi.factorybean.TV--------csgg
+		 Object fo = context.getBean("&tvProductFactory");
+			System.out.println(o.getClass().getName()+"--------"+str1+"---"+fo.getClass().getName());  //结果com.csgg.busi.factorybean.TV--------csgg
 			
 		context.close(); //触发DisposableBean接口
 			
