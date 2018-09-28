@@ -3,7 +3,8 @@
 
 	<contextName>${CONTEXT_NAME}</contextName>
 
-	<property resource="spring/log/log_${spring.profiles.active}.properties" />
+	<!-- <property resource="spring/log/log_${spring.profiles.active}.properties" /> -->
+	<property resource="spring/log/log.properties" />
 
 	<!-- ***************************************************************** -->
 	<!-- STDOUT APENDER -->

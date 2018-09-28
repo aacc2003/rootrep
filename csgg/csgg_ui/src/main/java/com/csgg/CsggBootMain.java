@@ -16,6 +16,7 @@ public class CsggBootMain {
 		 Object o = context.getBean("testS");
 			System.out.println(o+"--------"+str1);
 			
+//			context.destroy();  
 	}
 	
 }
