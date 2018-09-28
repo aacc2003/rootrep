@@ -13,8 +13,11 @@ public class CsggBootMain {
 	public static void main(final String[] args) {
 		ConfigurableApplicationContext  context = SpringApplication.run(CsggBootMain.class, args);
 		 String str1=context.getEnvironment().getProperty("spring.application.name");
-		 Object o = context.getBean("testS");
-			System.out.println(o+"--------"+str1);
+//		 Object o = context.getBean("testS");
+		 Object o = context.getBean("tvProductFactory");
+			System.out.println(o.getClass().getName()+"--------"+str1);  //结果com.csgg.busi.factorybean.TV--------csgg
+			
+		context.close(); //触发DisposableBean接口
 			
 //			context.destroy();  
 	}

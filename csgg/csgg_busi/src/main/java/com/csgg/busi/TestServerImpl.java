@@ -31,10 +31,11 @@ import com.csgg.service.api.TestServer;
 //@WebService(endpointInterface = "com.csgg.service.api.TestServer")
 @Service(version="1.0", interfaceClass = TestServer.class)
 @Component("testS")
-public class TestServerImpl implements TestServer, BeanFactoryPostProcessor, BeanPostProcessor,
-	InstantiationAwareBeanPostProcessor, BeanNameAware, InitializingBean, DisposableBean, 
-	BeanDefinitionRegistryPostProcessor,
-	ApplicationContextAware
+public class TestServerImpl implements TestServer, 
+	BeanFactoryPostProcessor, ApplicationContextAware, BeanDefinitionRegistryPostProcessor,
+	BeanPostProcessor, InstantiationAwareBeanPostProcessor, 
+	BeanNameAware, InitializingBean, DisposableBean
+	
 {
 	Logger logger = LoggerFactory.getLogger("CSGG");
 	ApplicationContext applicationContext;
@@ -66,6 +67,31 @@ public class TestServerImpl implements TestServer, BeanFactoryPostProcessor, Bea
 	public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
 		logger.info("---------BeanFactoryPostProcessor#postProcessBeanFactory");
 		this.beanFactory = beanFactory;
+		//例子：  此bean实例化前，获取bean工厂，可以得到已经实例化的bean
+//		 String[] beanStr = configurableListableBeanFactory
+//	                .getBeanDefinitionNames();
+//	        for (String beanName : beanStr) {
+//	            if ("beanFactoryPostProcessorTest".equals(beanName)) {
+//	                BeanDefinition beanDefinition = configurableListableBeanFactory
+//	                        .getBeanDefinition(beanName);
+//	                MutablePropertyValues m = beanDefinition.getPropertyValues();
+//	                if (m.contains("name")) {
+//	                    m.addPropertyValue("name", "赵四");
+//	                    System.out.println("》》》修改了name属性初始值了");
+//	                }
+//	            }
+//	        }
+		
+		//例子：自定义一个bean 注入spring容器
+//		//创建BeanDefinitionBuilder
+//        BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(UserInfoEntity.class);
+//        //设置属性值
+//        builder.addPropertyValue("name","list_test");
+//        //设置可通过@Autowire注解引用
+//        builder.setAutowireMode(AUTOWIRE_BY_NAME
+//        //注册到BeanDefinitionRegistry
+//        registry.registerBeanDefinition("userInfoEntity",builder.getBeanDefinition());
+
 	}
     
 	@Override
