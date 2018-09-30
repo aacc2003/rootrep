@@ -19,6 +19,8 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.dubbo.config.annotation.Service;
@@ -34,12 +36,14 @@ import com.csgg.service.api.TestServer;
 public class TestServerImpl implements TestServer, 
 	BeanFactoryPostProcessor, ApplicationContextAware, BeanDefinitionRegistryPostProcessor,
 	BeanPostProcessor, InstantiationAwareBeanPostProcessor, 
-	BeanNameAware, InitializingBean, DisposableBean
+	BeanNameAware, InitializingBean, DisposableBean,
+	EnvironmentAware
 	
 {
 	Logger logger = LoggerFactory.getLogger("CSGG");
 	ApplicationContext applicationContext;
 	ConfigurableListableBeanFactory beanFactory;
+	Environment environment;
 	
 	@Override
 	public String testS(String p) {
@@ -131,6 +135,12 @@ public class TestServerImpl implements TestServer,
 	@Override
 	public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
 		logger.info("---------BeanDefinitionRegistryPostProcessor#postProcessBeanDefinitionRegistry");
+	}
+
+	@Override
+	public void setEnvironment(Environment environment) {
+		logger.info("---------EnvironmentAware#setEnvironment");
+		this.environment = environment;
 	}
 
 }
