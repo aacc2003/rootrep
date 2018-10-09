@@ -17,9 +17,14 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
+import org.springframework.boot.SpringApplicationRunListener;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.ConfigurableEnvironment;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -37,7 +42,8 @@ public class TestServerImpl implements TestServer,
 	BeanFactoryPostProcessor, ApplicationContextAware, BeanDefinitionRegistryPostProcessor,
 	BeanPostProcessor, InstantiationAwareBeanPostProcessor, 
 	BeanNameAware, InitializingBean, DisposableBean,
-	EnvironmentAware
+	EnvironmentAware,
+	ApplicationListener, SpringApplicationRunListener
 	
 {
 	Logger logger = LoggerFactory.getLogger("CSGG");
@@ -141,6 +147,53 @@ public class TestServerImpl implements TestServer,
 	public void setEnvironment(Environment environment) {
 		logger.info("---------EnvironmentAware#setEnvironment");
 		this.environment = environment;
+	}
+
+	@Override
+	public void starting() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void environmentPrepared(ConfigurableEnvironment environment) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void contextPrepared(ConfigurableApplicationContext context) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void contextLoaded(ConfigurableApplicationContext context) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void started(ConfigurableApplicationContext context) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void running(ConfigurableApplicationContext context) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void failed(ConfigurableApplicationContext context, Throwable exception) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onApplicationEvent(ApplicationEvent event) {
+		logger.info("---------ApplicationListener#onApplicationEvent");
 	}
 
 }
