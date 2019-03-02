@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="true" scanPeriod="60 seconds" debug="true">
+
+	<contextName>${CONTEXT_NAME}</contextName>
+
+	<!-- <property resource="spring/log/log_${spring.profiles.active}.properties" /> -->
+	<property resource="spring/log/log.properties" />
+
+	<!-- ***************************************************************** -->
+	<!-- STDOUT APENDER -->
+	<!-- ***************************************************************** -->
+	<if condition='property("os.name").toUpperCase().contains("WINDOWS")'>
+		<then>
+			<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+				<encoder>
+					<pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36}:%L-%msg%n%n</pattern>
+				</encoder>
+			</appender>
+			<root>
+				<appender-ref ref="STDOUT" />
+			</root>
+		</then>
+	</if>
+	<appender name="csgg-all"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/csgg-all.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/csgg-all.log-%d{yyyy-MM-dd}.%i</fileNamePattern>
+			<!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+            <!-- <maxFileSize>1MB</maxFileSize>  -->
+            <maxFileSize>100KB</maxFileSize>
+            <!-- <totalSizeCap>10MB</totalSizeCap>  -->
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}---/%msg%n%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC-CSGG-ALL" class="com.csgg.comm.log.LogbackAsync">
+		<queueSize>10000</queueSize>
+		<appender-ref ref="csgg-all" />
+	</appender>
+
+	<appender name="ROLLING-CSGG-QUERY"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}//csgg-query.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${LOG_PATH}/csgg-query.log-%d{yyyy-MM-dd}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}---/%msg%n%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC-ROLLING-CSGG-QUERY" class="com.csgg.comm.log.LogbackAsync">
+		<queueSize>10000</queueSize>
+		<appender-ref ref="ROLLING-CSGG-QUERY" />
+	</appender>
+	<logger name="${LOGGER_CSGG_QUERY}">
+		<appender-ref ref="ASYNC-ROLLING-CSGG-QUERY" />
+	</logger>
+	
+	<appender name="ROLLING-CSGG"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/csgg.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${LOG_PATH}/csgg.log-%d{yyyy-MM-dd}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}---/%msg%n%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC_ROLLING-CSGG" class="com.csgg.comm.log.LogbackAsync">
+		<appender-ref ref="ROLLING-CSGG" />
+	</appender>
+	<logger name="${LOGGER_CSGG}">
+		<appender-ref ref="ASYNC_ROLLING-CSGG" />
+	</logger>
+
+	<appender name="ROLLING-CSGG-ERR"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/csgg-err.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- rollover daily -->
+			<fileNamePattern>${LOG_PATH}/csgg-err.log-%d{yyyy-MM-dd}
+			</fileNamePattern>
+		</rollingPolicy>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}---/%msg%n%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="ASYNC_ROLLING-CSGG-ERR" class="com.csgg.comm.log.LogbackAsync">
+		<includeCallerData>false</includeCallerData>
+		<appender-ref ref="ROLLING-CSGG-ERR" />
+	</appender>
+	<logger name="${LOGGER_CSGG_ERR}">
+		<appender-ref ref="ASYNC_ROLLING-CSGG-ERR" />
+	</logger>
+	
+<!-- 
+	<Logger name="com.ibatis.common.jdbc" level="debug" >
+	<appender-ref ref="STDOUT" />
+	</Logger>
+	<Logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate"
+		level="debug" >
+	<appender-ref ref="STDOUT" />
+	</Logger>
+	<Logger name="com.ibatis.common.jdbc.SimpleDataSource" level="debug" >
+	<appender-ref ref="STDOUT" />
+	</Logger>
+	<Logger name="java.sql.PreparedStatement" level="debug">
+	<appender-ref ref="STDOUT" />
+	</Logger>
+-->
+	
+	<root level="INFO">
+		<appender-ref ref="ASYNC-CSGG-ALL" />
+	</root>
+
+</configuration>

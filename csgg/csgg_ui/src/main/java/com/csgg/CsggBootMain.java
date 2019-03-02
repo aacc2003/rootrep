@@ -18,7 +18,7 @@ public class CsggBootMain {
 		 Object fo = context.getBean("&tvProductFactory");
 			System.out.println(o.getClass().getName()+"--------"+str1+"---"+fo.getClass().getName());  //结果com.csgg.busi.factorybean.TV--------csgg
 			
-		context.close(); //触发DisposableBean接口
+//		context.close(); //触发DisposableBean接口
 			
 //			context.destroy();  
 	}
