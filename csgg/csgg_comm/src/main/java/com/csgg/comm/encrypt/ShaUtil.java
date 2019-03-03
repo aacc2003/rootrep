@@ -1,6 +1,4 @@
-/*
- * Copyright (c) 2018 glassescat Inc.All Rights Reserved.
- */
+
 package com.csgg.comm.encrypt;
 
 public class ShaUtil {

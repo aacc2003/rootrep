@@ -5,6 +5,9 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.logging.log4j.util.Strings;
+
 import java.security.Key;
 
 
