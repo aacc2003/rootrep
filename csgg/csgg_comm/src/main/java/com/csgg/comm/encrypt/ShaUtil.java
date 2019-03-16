@@ -1,25 +1,27 @@
 
 package com.csgg.comm.encrypt;
 
+import java.security.MessageDigest;
+
+import org.apache.commons.codec.binary.Hex;
+
 public class ShaUtil {
-
-	private static final ShaUtil shaUtil = new ShaUtil();
-
-	private static final int HASH_INTERATIONS = 1024;
-
-	private static  final String salt = "4636afc31e6cc891";
-
-	public static ShaUtil newInstance() {
-		return shaUtil;
-	}
 	
-	/**
-	 * 加密
-	 * @param plain
-	 * @return
-	 */
-	public String encrypt(String plain) {
-		return Encodes.encodeHex(
-			Digests.sha1(plain.getBytes(), Encodes.decodeHex(new String(salt)), HASH_INTERATIONS));
+	// sha256
+	 public static String  sha256(String ori){
+	        MessageDigest md;
+	        try {
+	            md = MessageDigest.getInstance("SHA-256");
+
+	            md.update(ori.getBytes("UTF-8"));
+	            String res=new String(Hex.encodeHex(md.digest()));
+	            return res;
+	        } catch (Exception e) {
+	            throw new RuntimeException( "SHA256失败："+e.getMessage());
+	        }
+	    }
+
+	public static void main(String[] args) {
+		System.out.println("sha256:"+ShaUtil.sha256("kdfwposdf82nhng"));
 	}
 }
