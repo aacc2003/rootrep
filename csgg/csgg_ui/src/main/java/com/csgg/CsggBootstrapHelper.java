@@ -49,8 +49,6 @@ import javax.servlet.ServletException;
  *
  *    }
  * </pre>
- * 
- * @author Bohr.Qiu <qzhanbo@yiji.com>
  */
 public class CsggBootstrapHelper {
 	private static final char ENTER_CHAR = '\n';
