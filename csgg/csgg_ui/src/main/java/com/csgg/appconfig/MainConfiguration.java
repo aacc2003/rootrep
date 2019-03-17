@@ -12,7 +12,7 @@ public class MainConfiguration {
 	@Bean
 	public TomcatServletWebServerFactory servletContainer() {
 		TomcatServletWebServerFactory c = new TomcatServletWebServerFactory();
-		c.setPort(9703);
+		c.setPort(9700);
 		return c;
 	}
 }

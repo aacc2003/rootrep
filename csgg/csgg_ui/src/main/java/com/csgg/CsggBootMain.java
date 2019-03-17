@@ -3,11 +3,14 @@ package com.csgg;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
+import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
 
 //@EnableDubboConfiguration
 @SpringBootApplication
+@EnableDubbo
 public class CsggBootMain {
 	
 	public static void main(final String[] args) {

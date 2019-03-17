@@ -36,8 +36,8 @@ import com.csgg.service.api.TestServer;
  *
  */
 //@WebService(endpointInterface = "com.csgg.service.api.TestServer")
-@Service(version="1.0", interfaceClass = TestServer.class)
-@Component("testS")
+//@Service(version="1.0", interfaceClass = TestServer.class)
+//@Component("testS")
 public class TestServerImpl implements TestServer, 
 	BeanFactoryPostProcessor, ApplicationContextAware, BeanDefinitionRegistryPostProcessor,
 	BeanPostProcessor, InstantiationAwareBeanPostProcessor, 

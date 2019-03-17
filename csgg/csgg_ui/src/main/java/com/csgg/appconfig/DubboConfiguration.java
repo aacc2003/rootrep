@@ -18,9 +18,7 @@ import com.alibaba.dubbo.config.MonitorConfig;
 import com.alibaba.dubbo.config.ProtocolConfig;
 import com.alibaba.dubbo.config.ProviderConfig;
 import com.alibaba.dubbo.config.RegistryConfig;
-import com.alibaba.dubbo.config.spring.AnnotationBean;
 import com.alibaba.dubbo.spring.boot.health.DubboHealthIndicator;
-import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
 @Configuration
@@ -36,7 +34,7 @@ public class DubboConfiguration implements InitializingBean, ApplicationContextA
 	
 	@Bean
 	public static ApplicationConfig applicationConfig() {
-System.out.println("-------------");
+System.out.println("-------------dubbo app:");
 		ApplicationConfig config = new ApplicationConfig();
 		config.setName("csgg");
 		config.setOwner("wanglei");
@@ -47,10 +45,10 @@ System.out.println("-------------");
 	@Bean
 	@DependsOn("applicationConfig")
 	public static RegistryConfig registryConfig() {
-
+System.out.println("-------------dubbo registry:");
 		RegistryConfig config = new RegistryConfig();
-//		config.setProtocol("zookeeper");
-		config.setProtocol("dubbo");
+		config.setProtocol("zookeeper");
+//		config.setProtocol("dubbo");
 		
 		config.setRegister(true);
 		config.setAddress("zookeeper://127.0.0.1:2181");
@@ -62,7 +60,7 @@ System.out.println("-------------");
 	@ConditionalOnProperty(value = "yiji.dubbo.provider.enable", matchIfMissing = true)
 	@DependsOn("applicationConfig")
 	public static ProtocolConfig protocolConfig() {
-
+System.out.println("-------------dubbo protocol:");
 		ProtocolConfig config = new ProtocolConfig();
 		config.setName("dubbo");
 		config.setPort(20880);
@@ -82,7 +80,7 @@ System.out.println("-------------");
 	@Bean
 	@ConditionalOnProperty(value = "yiji.dubbo.provider.enable", matchIfMissing = true)
 	public static ProviderConfig providerConfig() {
-
+System.out.println("-------------dubbo provider:");
 		ProviderConfig config = new ProviderConfig();
 		config.setTimeout(60000);
 		config.setCluster("failfast");
@@ -94,7 +92,7 @@ System.out.println("-------------");
 	@Bean
 	@DependsOn({ "applicationConfig", "registryConfig" })
 	public static ConsumerConfig consumerConfig() {
-
+System.out.println("-------------dubbo consumer:");
 		ConsumerConfig config = new ConsumerConfig();
 		config.setCheck(false);
 		config.setLoadbalance("roundrobin");
@@ -105,6 +103,7 @@ System.out.println("-------------");
 	@Bean
 	@DependsOn({ "registryConfig" })
 	public static MonitorConfig monitorConfig() {
+System.out.println("-------------dubbo monitor:");
 		MonitorConfig config = new MonitorConfig();
 		config.setProtocol("registry");
 		return config;
@@ -112,6 +111,7 @@ System.out.println("-------------");
 	
 	@Bean
 	public DubboHealthIndicator dubboHealthIndicator() {
+System.out.println("-------------dubbo indicator:");
 		return new DubboHealthIndicator();
 	}
 
@@ -120,5 +120,5 @@ System.out.println("-------------");
 		
 		this.applicationContext= applicationContext;
 	}
-		
+	
 }
