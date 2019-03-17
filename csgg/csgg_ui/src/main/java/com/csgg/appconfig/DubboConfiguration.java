@@ -23,7 +23,7 @@ import com.alibaba.dubbo.spring.boot.health.DubboHealthIndicator;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 
-//@Configuration
+@Configuration
 public class DubboConfiguration implements InitializingBean, ApplicationContextAware {
 
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DubboConfiguration.class);

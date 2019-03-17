@@ -6,7 +6,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 
 import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
 
-@EnableDubboConfiguration
+//@EnableDubboConfiguration
 @SpringBootApplication
 public class CsggBootMain {
 	

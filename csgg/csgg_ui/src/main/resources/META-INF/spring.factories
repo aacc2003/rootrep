@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.csgg.appconfig.MainConfiguration,com.csgg.appconfig.DubboConfiguration
