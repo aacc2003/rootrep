@@ -8,7 +8,6 @@ import org.springframework.context.annotation.ComponentScan;
 import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import com.alibaba.dubbo.spring.boot.annotation.EnableDubboConfiguration;
 
-//@EnableDubboConfiguration
 @SpringBootApplication
 @EnableDubbo
 public class CsggBootMain {

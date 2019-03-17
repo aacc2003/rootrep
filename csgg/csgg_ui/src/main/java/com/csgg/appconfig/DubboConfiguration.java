@@ -22,6 +22,7 @@ import com.alibaba.dubbo.spring.boot.health.DubboHealthIndicator;
 import com.google.common.collect.Maps;
 
 @Configuration
+//@ConditionalOnProperty(value = "spring.dubbo.server", matchIfMissing = true)
 public class DubboConfiguration implements InitializingBean, ApplicationContextAware {
 
 	private static final org.slf4j.Logger logger = LoggerFactory.getLogger(DubboConfiguration.class);
