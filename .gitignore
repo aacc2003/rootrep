@@ -3,3 +3,5 @@
 *.project
 *.bak
 *.gitignore
+*.prefs
+*.setting
