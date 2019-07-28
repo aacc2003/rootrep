@@ -5,3 +5,6 @@
 *.gitignore
 *.prefs
 *.setting
+*target*
+*classes*
+*.jar
