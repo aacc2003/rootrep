@@ -24,11 +24,7 @@
       <artifactId>junit</artifactId>
     </dependency>
      -->
-    
-    <dependency>
-      <groupId>com.csgg.comm</groupId>
-      <artifactId>csgg_comm</artifactId>
-    </dependency>
+   
     <dependency>
       <groupId>com.csgg.db</groupId>
       <artifactId>csgg_db</artifactId>
