@@ -15,7 +15,7 @@ public class DomainObject extends AbstractDomain implements DOBaseAction {
 	
 	private String update;
 	
-	private boolean isSqlBinderSupport = false;
+	private boolean isSqlBinderSupport = true;
 
 	@Override
 	public Object insert() {
