@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 public abstract class SubscriberWrapper implements Comparable<SubscriberWrapper> {
 
-	private final Logger logger = LoggerFactory.getLogger(this.getClass());
+	private final static Logger logger = LoggerFactory.getLogger(SubscriberWrapper.class);
 	
 	private Object listener;
 	
@@ -15,8 +15,59 @@ public abstract class SubscriberWrapper implements Comparable<SubscriberWrapper>
 	
 	private int priority;
 	
-	public static SubscriberWrapper newInstance(Object listner, Method method) {
-		
+	// 组装invocation方法
+	public static SubscriberWrapper newInstance(Object listener, Method method) {
+		try {
+			String listenerClassName = listener.getClass().getName();
+			
+			Class<?>[] paramTypes = method.getParameterTypes();
+			StringBuilder methodDefinition = new StringBuilder();
+			methodDefinition.append("public void invocation(Object[] events) {\n\t").append(listenerClassName)
+				.append("listener = (").append(listenerClassName).append(") getListener(); \n\t").append("listener.")
+				.append(method.getName()).append("(");
+			
+			//参数
+			for (int i=0, j=paramTypes.length; i<j; i++) {
+				if (0!=i) {
+					methodDefinition.append(",");
+				}
+				
+				Class<?> paramType = paramTypes[i];
+				if (paramType.isPrimitive()) {
+					if (paramType == int.class) {
+						methodDefinition.append("Integer.parseInt(events[").append(i).append("].toString())");
+					} else if (paramType == long.class) {
+						methodDefinition.append("Long.parseLong(events[").append(i).append("].toString())");
+					} else if (paramType == short.class) {
+						methodDefinition.append("Short.parseShort(events[").append(i).append("].toString())");
+					} else if (paramType == double.class) {
+						methodDefinition.append("Double.parseDouble(events[").append(i).append("].toString())");
+					} else if (paramType == char.class) {
+						methodDefinition.append("((Character)events[").append(i).append("]).charValue()");
+					} else if (paramType == byte.class) {
+						methodDefinition.append("Byte.parseByte(events[").append(i).append("].toString())");
+					} else if (paramType == float.class) {
+						methodDefinition.append("Float.parseFloat(events[").append(i).append("].toString())");
+					} else if (paramType == boolean.class) {
+						methodDefinition.append("Boolean.parseBoolean(events[").append(i).append("].toString())");
+					}
+				} else {
+					methodDefinition.append("(").append(paramTypes[i].getName()).append(")events[").append(i)
+						.append("]");
+				}
+			}
+			methodDefinition.append(");\n\t}");
+			
+			if (logger.isDebugEnabled()) {
+				logger.debug("监听器[{}#{}]对应生存代码\n{}", listener.getClass().toString(), method.toString(),
+						methodDefinition.toString());
+			}
+			
+			CtClass ct = 
+			
+		} catch(Exception e) {
+			
+		}
 	}
 	
 	public Object getListener() {
