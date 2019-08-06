@@ -70,6 +70,92 @@ public class NotifierBus implements Notifier {
 			lock.writeLock().unlock();
 		}
 	}
+	
+	private Class<?>[] checkMethod(Method method) {
+		Class<?>[] paramTypes = method.getParameterTypes();
+		for (Class<?> paramType : paramTypes) {
+			if (paramType.isArray()) {
+				throw new RuntimeException(String.format("监听事件不支持数组类型,请使用集合,method=%s",
+						method.getDeclaringClass().getName() + "#" + method.getName()));
+			}
+		}
+		
+		Class<?> returnType = method.getReturnType();
+		if (returnType != void.class) {
+			throw new RuntimeException(String.format("监听事件非法返回值returnType=%s", returnType.getName()));
+		}
+		
+		return paramTypes;
+	}
+	
+	private Class<?>[] extraEventType(Method method) {
+		Class<?>[] paramTypes = method.getParameterTypes();
+		Class<?>[] eventTypes ;
+		if (paramTypes.length == 0) {
+			eventTypes = new Class[] {NoneEvent.class};
+		} else {
+			eventTypes = paramTypes;
+		}
+		
+		eventTypes = typeConvert(eventTypes);
+		
+		return eventTypes;
+	}
+	
+	private Class<?>[] typeConvert(Class<?>[] eventTypes) {
+		
+		Class<?>[] types = new Class<?>[eventTypes.length];
+		
+		for (int i = 0, j = types.length; i < j; i++) {
+			Class<?> eventType = eventTypes[i];
+			if (eventType.isPrimitive()) {
+				if (eventType == int.class) {
+					types[i] = Integer.class;
+				} else if (eventType == byte.class) {
+					types[i] = Byte.class;
+				} else if (eventType == short.class) {
+					types[i] = Short.class;
+				} else if (eventType == long.class) {
+					types[i] = Long.class;
+				} else if (eventType == char.class) {
+					types[i] = Character.class;
+				} else if (eventType == float.class) {
+					types[i] = Float.class;
+				} else if (eventType == double.class) {
+					types[i] = Double.class;
+				} else if (eventType == boolean.class) {
+					types[i] = Boolean.class;
+				}
+			} else {
+				types[i] = eventType;
+			}
+		}
+		
+		return types;
+	}
+	
+	private String getKey(Class<?>[] eventTypes) {
+		
+		StringBuilder key = new StringBuilder();
+		for (int i = 0, j = eventTypes.length; i < j; i++) {
+			if (i != 0) {
+				key.append(",");
+			}
+			key.append(eventTypes[i].getName());
+		}
+		return key.toString();
+	}
+	
+	private String getKey(Object[] events) {
+		StringBuilder key = new StringBuilder();
+		for (int i = 0, j = events.length; i < j; i++) {
+			if (i != 0) {
+				key.append(",");
+			}
+			key.append(events[i].getClass().getName());
+		}
+		return key.toString();
+	}
 
 	@Override
 	public <L> void unregister(L listner) {
