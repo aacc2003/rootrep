@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javassist.CtClass;
+
 public abstract class SubscriberWrapper implements Comparable<SubscriberWrapper> {
 
 	private final static Logger logger = LoggerFactory.getLogger(SubscriberWrapper.class);
@@ -63,10 +65,12 @@ public abstract class SubscriberWrapper implements Comparable<SubscriberWrapper>
 						methodDefinition.toString());
 			}
 			
-			CtClass ct = 
+			CtClass ct = com.xxxxx.devsuit.common.Compiler.getInstance().newClass(SubscriberWrapper.class);
+			return com.xxxxx.devsuit.common.Compiler.getInstance().methodWeave(ct, SubscriberWrapper.class, methodDefinition.toString())
+				.newInstance(ct, null, null);
 			
 		} catch(Exception e) {
-			
+			throw new RuntimeException(e);
 		}
 	}
 	

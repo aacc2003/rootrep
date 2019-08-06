@@ -45,7 +45,7 @@ public class Compiler {
 		}
 	}
 	
-	public CtClass newCtClassWithClassPath(Class supperClass) {
+	public CtClass newClass(Class supperClass) {
 		return newCtClassWithClassPath(supperClass, null);
 	}
 	
