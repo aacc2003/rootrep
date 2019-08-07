@@ -1,16 +1,19 @@
 package com.xxxxx.devsuit.event;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-import org.apache.tools.ant.taskdefs.Execute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.util.CollectionUtils;
 
 public class NotifierBus implements Notifier {
 	
@@ -18,7 +21,7 @@ public class NotifierBus implements Notifier {
 	
 	private ReentrantReadWriteLock lock = new ReentrantReadWriteLock();
 	
-//	private Dispatcher dispacher;
+	private Dispatcher dispacher;
 	
 	private Map<String, List<SubscriberWrapper>> cache = new ConcurrentHashMap<>();
 	
@@ -43,13 +46,42 @@ public class NotifierBus implements Notifier {
 					threadPool.getKeepAliveSeconds(), threadPool.getMaxPoolSize());
 		}
 		
-//		dispacher = new Dispatcher(executor);
+		dispacher = new Dispatcher(executor);
 	} 
 
 	@Override
-	public <L> void register(L listner) {
-		// TODO Auto-generated method stub
+	public <L> void register(L listener) {
+		
+		if (null == listener) {
+			return;
+		}
+		
+		proceed(listener, new ProceedCallback(){
 
+			@Override
+			void doProceed(Class<?>[] eventTypes, Method method) {
+				SubscriberWrapper subscriberWrapper = SubscriberWrapper.newInstance(listener, method); 
+				Subscribe subscribe = method.getAnnotation(Subscribe.class);
+				
+				subscriberWrapper.setAsync(subscribe.isAsync());
+				subscriberWrapper.setListener(listener);
+				subscriberWrapper.setPriority(subscribe.priority());
+				
+				List<SubscriberWrapper> subscribersTmp = new ArrayList<>();
+				subscribersTmp.add(subscriberWrapper);
+				
+				String key = getKey(eventTypes);
+				List<SubscriberWrapper> subscribers = cache.get(key);
+				if (null != subscribers) {
+					subscribers.addAll(subscribersTmp);
+				} else {
+					cache.put(key, subscribersTmp);
+				}
+				
+				Collections.sort(cache.get(key));
+			}
+			
+		}) ;
 	}
 	
 	private <L> void proceed(L listener, ProceedCallback proceedCallback) {
@@ -158,14 +190,52 @@ public class NotifierBus implements Notifier {
 	}
 
 	@Override
-	public <L> void unregister(L listner) {
-		// TODO Auto-generated method stub
+	public <L> void unregister(L listener) {
+		
+		if (listener == null) {
+			return;
+		}
+		
+		proceed(listener, new ProceedCallback(){
 
+			@Override
+			void doProceed(Class<?>[] eventTypes, Method method) {
+				
+				String key = getKey(eventTypes);
+				List<SubscriberWrapper> subscribers = cache.get(key);
+				if (!CollectionUtils.isEmpty(subscribers)) {
+					Iterator<SubscriberWrapper>  it = subscribers.iterator();
+					while (it.hasNext()) {
+						SubscriberWrapper subscriberWrapper = it.next();
+						if (subscriberWrapper.equals(listener)) {
+							it.remove();
+						}
+					}
+				}
+			}
+			
+		});
 	}
 
 	@Override
 	public boolean dispatcher(Object... events) {
-		// TODO Auto-generated method stub
+		try {
+			lock.readLock().lock();
+			String key = getKey(events);
+			List<SubscriberWrapper> subscribers = cache.get(key);
+			if (CollectionUtils.isEmpty(subscribers)) {
+				logger.warn("不存在的事件注册eventTypes = {}", key);
+				return false;
+			}
+			
+			for (SubscriberWrapper subscriber : subscribers) {
+				dispacher.equals(new Dispatcher.DispatcherTask(subscriber, events));
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		} finally {
+			lock.readLock().unlock();
+		}
 		return false;
 	}
 

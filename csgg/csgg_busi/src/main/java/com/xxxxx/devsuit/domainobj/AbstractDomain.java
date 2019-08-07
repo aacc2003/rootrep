@@ -2,16 +2,18 @@ package com.xxxxx.devsuit.domainobj;
 
 import org.springframework.beans.BeanUtils;
 
+import com.xxxxx.devsuit.event.NotifierBus;
+
 public class AbstractDomain implements Domain {
 	
-	private final String[] s = new String[0];
+	private final String[] empty = new String[0];
 	
-	private Notifier notifier;
+	private NotifierBus notifierBus;
 
 	@Override
 	public <DTO> void convertFrom(DTO dto) {
 		
-		convertFrom(dto, s);
+		convertFrom(dto, empty);
 	}
 
 	@Override
@@ -23,7 +25,7 @@ public class AbstractDomain implements Domain {
 	@Override
 	public <DTO> void convertTo(DTO dto) {
 		
-		convertTo(dto, s);
+		convertTo(dto, empty);
 	}
 
 	@Override
@@ -34,8 +36,16 @@ public class AbstractDomain implements Domain {
 
 	@Override
 	public void publish(Object... events) {
-		// TODO Auto-generated method stub
+		
+		notifierBus.dispatcher(events);
+	}
 
+	public NotifierBus getNotifierBus() {
+		return notifierBus;
+	}
+
+	public void setNotifierBus(NotifierBus notifierBus) {
+		this.notifierBus = notifierBus;
 	}
 
 }
