@@ -1,13 +1,16 @@
 package com.xxxxx.devsuit.domainobj;
 
-//import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import org.mybatis.spring.SqlSessionTemplate;
 
 public class DomainObject extends AbstractDomain implements DOBaseAction {
 	
 //	TODO
 //	private DomainFactory domainFactory;
-//	TODO
-//	private SqlSessionTemplate sqlSessionTemplate;
+	
+	@Autowired
+	private SqlSessionTemplate sqlSessionTemplate;
 
 	private String insert;
 	
@@ -19,26 +22,26 @@ public class DomainObject extends AbstractDomain implements DOBaseAction {
 
 	@Override
 	public Object insert() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return sqlSessionTemplate.insert(insert, this);
 	}
 
 	@Override
 	public int update() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return sqlSessionTemplate.update(update, this);
 	}
 
 	@Override
 	public int delete() {
-		// TODO Auto-generated method stub
-		return 0;
+		
+		return sqlSessionTemplate.delete(delete, this);
 	}
 
 	@Override
 	public <T, R> R load(T key, String queryId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return sqlSessionTemplate.selectOne(queryId, key);
 	}
 //
 //	public DomainFactory getDomainFactory() {
@@ -48,14 +51,14 @@ public class DomainObject extends AbstractDomain implements DOBaseAction {
 //	public void setDomainFactory(DomainFactory domainFactory) {
 //		this.domainFactory = domainFactory;
 //	}
-//
-//	public SqlSessionTemplate getSqlSessionTemplate() {
-//		return sqlSessionTemplate;
-//	}
-//
-//	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-//		this.sqlSessionTemplate = sqlSessionTemplate;
-//	}
+
+	public SqlSessionTemplate getSqlSessionTemplate() {
+		return sqlSessionTemplate;
+	}
+
+	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
+		this.sqlSessionTemplate = sqlSessionTemplate;
+	}
 
 	public String getInsert() {
 		return insert;
