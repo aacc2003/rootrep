@@ -2,7 +2,7 @@ package com.xxxxx.devsuit.domainobj;
 
 public interface DOBaseAction {
 
-	Object insert();
+	DomainObject insert();
 	
 	int update();
 	

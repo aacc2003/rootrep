@@ -2,6 +2,8 @@ package com.xxxxx.devsuit.domainobj;
 
 import java.util.Date;
 
+import com.xxxxx.devsuit.domain.BizNoCreator;
+
 public abstract class EntityObject extends DomainObjectValidator {
 
 	private long identity;
@@ -12,8 +14,7 @@ public abstract class EntityObject extends DomainObjectValidator {
 	
 	private Date rawUpdateTime;
 	
-//	TODO
-//	private InternalSeqCreator internalSeqCreator;
+	private BizNoCreator bizNoCreator;
 	
 	public void generateIdentity() {
 //		TODO
@@ -61,12 +62,12 @@ public abstract class EntityObject extends DomainObjectValidator {
 		this.rawUpdateTime = rawUpdateTime;
 	}
 
-//	public InternalSeqCreator getInternalSeqCreator() {
-//		return internalSeqCreator;
-//	}
-//
-//	public void setInternalSeqCreator(InternalSeqCreator internalSeqCreator) {
-//		this.internalSeqCreator = internalSeqCreator;
-//	}
-	
+	public BizNoCreator getBizNoCreator() {
+		return bizNoCreator;
+	}
+
+	public void setBizNoCreator(BizNoCreator bizNoCreator) {
+		this.bizNoCreator = bizNoCreator;
+	}
+
 }

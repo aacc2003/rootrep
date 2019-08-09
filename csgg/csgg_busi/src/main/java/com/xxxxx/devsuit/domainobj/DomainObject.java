@@ -2,12 +2,14 @@ package com.xxxxx.devsuit.domainobj;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.xxxxx.devsuit.domain.DomainFactory;
+
 import org.mybatis.spring.SqlSessionTemplate;
 
 public class DomainObject extends AbstractDomain implements DOBaseAction {
 	
-//	TODO
-//	private DomainFactory domainFactory;
+
+	private DomainFactory domainFactory;
 	
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
@@ -21,9 +23,10 @@ public class DomainObject extends AbstractDomain implements DOBaseAction {
 	private boolean isSqlBinderSupport = true;
 
 	@Override
-	public Object insert() {
+	public DomainObject insert() {
 		
-		return sqlSessionTemplate.insert(insert, this);
+		sqlSessionTemplate.insert(insert, this);
+		return this;
 	}
 
 	@Override
@@ -43,14 +46,14 @@ public class DomainObject extends AbstractDomain implements DOBaseAction {
 		
 		return sqlSessionTemplate.selectOne(queryId, key);
 	}
-//
-//	public DomainFactory getDomainFactory() {
-//		return domainFactory;
-//	}
-//
-//	public void setDomainFactory(DomainFactory domainFactory) {
-//		this.domainFactory = domainFactory;
-//	}
+
+	public DomainFactory getDomainFactory() {
+		return domainFactory;
+	}
+
+	public void setDomainFactory(DomainFactory domainFactory) {
+		this.domainFactory = domainFactory;
+	}
 
 	public SqlSessionTemplate getSqlSessionTemplate() {
 		return sqlSessionTemplate;
