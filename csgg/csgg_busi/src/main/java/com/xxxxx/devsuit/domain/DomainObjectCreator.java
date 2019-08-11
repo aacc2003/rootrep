@@ -26,7 +26,7 @@ public abstract class DomainObjectCreator {
 		this.domainFactory = domainFactory;
 	}
 	
-	public abstract DomainObject create();
+	public abstract <C extends DomainObject> C create(Class<C> clazz);
 	
 	// 此方法会用得比较多
 	public abstract void refresh(DomainObject domainObject) ;

@@ -3,7 +3,6 @@ package com.xxxxx.devsuit.domain;
 import org.mybatis.spring.SqlSessionTemplate;
 
 import com.xxxxx.devsuit.domainobj.AbstractDomain;
-import com.xxxxx.devsuit.domainobj.AggregateRoot;
 import com.xxxxx.devsuit.domainobj.DomainObject;
 import com.xxxxx.devsuit.domainobj.EntityObject;
 import com.xxxxx.devsuit.event.NotifierBus;
@@ -17,14 +16,10 @@ public class DefaultDomainObjectCreator extends DomainObjectCreator {
 	}
 
 	@Override
-	public DomainObject create() {
-		EntityObject domainObject = new EntityObject(){
-
-			@Override
-			public void referenceTo(AggregateRoot ref) {
-				
-			}};
-			
+	public <C extends DomainObject> C create(Class<C> clazz) {
+		
+		try {
+			C domainObject = clazz.newInstance();
 			domainObject.setSqlSessionTemplate(sqlSessionTemplate);
 			domainObject.setDomainFactory(domainFactory);
 			if(domainObject instanceof AbstractDomain){
@@ -33,7 +28,12 @@ public class DefaultDomainObjectCreator extends DomainObjectCreator {
 	        if(domainObject instanceof EntityObject){
 	            ((EntityObject)domainObject).setBizNoCreator(bizNoCreator);
 	        }
-		return domainObject;
+	        return domainObject;
+		} catch (InstantiationException e) {
+			throw new  RuntimeException(e);
+		} catch (IllegalAccessException e) {
+			throw new  RuntimeException(e);
+		}	
 	}
 
 	@Override

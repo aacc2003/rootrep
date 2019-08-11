@@ -20,6 +20,8 @@ public class DomainFactory implements ApplicationContextAware {
 	private SqlSessionTemplate sqlSessionTemplate;
 	
 	private BizNoCreator bizNoCreator;
+	
+	private DomainObjectCreator  domainObjectCreator;
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
