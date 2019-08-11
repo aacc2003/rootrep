@@ -1,5 +1,7 @@
 package com.xxxxx.devsuit.domainobj;
 
+import com.xxxxx.devsuit.domain.DomainFactory;
+
 public interface DOBaseAction {
 
 	DomainObject insert();
@@ -10,6 +12,5 @@ public interface DOBaseAction {
 	
 	<T, R> R load(T key, String queryId);
 	
-//	TODO
-//	DomainFactory domainFactory();
+	DomainFactory domainFactory();
 }

@@ -9,18 +9,15 @@ public abstract class DomainObjectCreator {
 
 	protected SqlSessionTemplate sqlSessionTemplate;
 	
-	protected Class domainObjectType;
-	
 	protected BizNoCreator bizNoCreator;
 	
 	protected NotifierBus notifierBus;
 
 	protected DomainFactory domainFactory;
 	
-	public DomainObjectCreator(SqlSessionTemplate sqlSessionTemplate, Class domainObjectType, BizNoCreator bizNoCreator,
+	public DomainObjectCreator(SqlSessionTemplate sqlSessionTemplate, BizNoCreator bizNoCreator,
 			NotifierBus notifierBus, DomainFactory domainFactory) {
 		this.sqlSessionTemplate = sqlSessionTemplate;
-		this.domainObjectType = domainObjectType;
 		this.bizNoCreator = bizNoCreator;
 		this.notifierBus = notifierBus;
 		this.domainFactory = domainFactory;

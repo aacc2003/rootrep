@@ -95,11 +95,10 @@ public class DomainObject extends AbstractDomain implements DOBaseAction {
 		this.isSqlBinderSupport = isSqlBinderSupport;
 	}
 
-//	TODO
-//	@Override
-//	public DomainFactory domainFactory() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public DomainFactory domainFactory() {
+
+		return domainFactory;
+	}
 
 }

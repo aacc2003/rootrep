@@ -9,10 +9,10 @@ import com.xxxxx.devsuit.event.NotifierBus;
 
 public class DefaultDomainObjectCreator extends DomainObjectCreator {
 	
-	public DefaultDomainObjectCreator(SqlSessionTemplate sqlSessionTemplate, Class domainObjectType,
+	public DefaultDomainObjectCreator(SqlSessionTemplate sqlSessionTemplate, 
 			BizNoCreator bizNoCreator, NotifierBus notifierBus, DomainFactory domainFactory) {
 		
-		super(sqlSessionTemplate, domainObjectType, bizNoCreator, notifierBus, domainFactory);
+		super(sqlSessionTemplate, bizNoCreator, notifierBus, domainFactory);
 	}
 
 	@Override

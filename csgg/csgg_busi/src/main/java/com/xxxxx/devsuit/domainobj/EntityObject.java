@@ -16,14 +16,26 @@ public abstract class EntityObject extends DomainObjectValidator {
 	
 	private BizNoCreator bizNoCreator;
 	
-	public void generateIdentity() {
-//		TODO
-		identity = 123;
+	public void createIdentity(String seqName) {
+		if (bizNoCreator == null) {
+			throw new RuntimeException(String.format("序列号生存器bizNoCreator尚未初始化，不支持的操作..."));
+		}
+		
+		this.identity = bizNoCreator.getSeq(seqName);
 	}
 	
-	public String generateBizNo() {
-//		TODO
-		bizNo = "xxx";
+	public String createBizNo(String seqName, boolean isOverrideIdentity, String prefix) {
+		if (bizNoCreator == null) {
+			throw new RuntimeException(String.format("序列号生存器bizNoCreator尚未初始化，不支持的操作..."));
+		}
+		
+		long seq = bizNoCreator.getSeq(seqName);
+		this.bizNo = bizNoCreator.createBizNo(seq, prefix);
+		
+		if (isOverrideIdentity) {
+			this.identity = seq;
+		}
+		
 		return bizNo;
 	}
 	
