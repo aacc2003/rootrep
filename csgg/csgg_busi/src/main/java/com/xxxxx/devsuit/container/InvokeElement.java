@@ -1,6 +1,11 @@
 package com.xxxxx.devsuit.container;
 
-public class InvokeElement {
+import com.xxxxx.devsuit.container.Invoker.SerialLock;
+import com.xxxxx.devsuit.container.Invoker.TransactionAttribute;
+import com.xxxxx.devsuit.domainobj.EntityObject;
+import com.xxxxx.devsuit.result.StandardResult;
+
+public abstract class InvokeElement {
 
 	private String serviceName;
 	
@@ -15,6 +20,25 @@ public class InvokeElement {
 	private boolean isEntityInjectSpringBeans = false;
 	
 	private InvokeService invokeService;
+	
+	private Invoker.SerialLock serialLock;
+	
+	private Invoker.TransactionAttribute transactionAttribute;
+	
+	public InvokeElement(String serviceName, String logName, Class entity, String result, boolean isAsync,
+			boolean isEntityInjectSpringBeans, InvokeService invokeService, SerialLock serialLock,
+			TransactionAttribute transactionAttribute) {
+
+		this.serviceName = serviceName;
+		this.logName = logName;
+		this.entity = entity;
+		this.result = result;
+		this.isAsync = isAsync;
+		this.isEntityInjectSpringBeans = isEntityInjectSpringBeans;
+		this.invokeService = invokeService;
+		this.serialLock = serialLock;
+		this.transactionAttribute = transactionAttribute;
+	}
 
 	public String getServiceName() {
 		return serviceName;
@@ -71,4 +95,25 @@ public class InvokeElement {
 	public void setInvokeService(InvokeService invokeService) {
 		this.invokeService = invokeService;
 	}
+
+	public Invoker.SerialLock getSerialLock() {
+		return serialLock;
+	}
+
+	public void setSerialLock(Invoker.SerialLock serialLock) {
+		this.serialLock = serialLock;
+	}
+
+	public Invoker.TransactionAttribute getTransactionAttribute() {
+		return transactionAttribute;
+	}
+
+	public void setTransactionAttribute(Invoker.TransactionAttribute transactionAttribute) {
+		this.transactionAttribute = transactionAttribute;
+	}
+	
+	public abstract EntityObject newEntityObject();
+	
+	public abstract StandardResult newResult();
+	
 }

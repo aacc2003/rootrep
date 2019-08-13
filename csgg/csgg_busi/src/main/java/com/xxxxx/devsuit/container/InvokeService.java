@@ -2,7 +2,9 @@ package com.xxxxx.devsuit.container;
 
 import org.springframework.beans.factory.BeanNameAware;
 
-public interface InvokeService<ORDER, RESULT> extends BeanNameAware {
+import com.xxxxx.devsuit.result.StandardResult;
+
+public interface InvokeService<ORDER, RESULT extends StandardResult> extends BeanNameAware {
 
 	public void invoke(ServiceContext<ORDER, RESULT> serviceContext) ;
 	
