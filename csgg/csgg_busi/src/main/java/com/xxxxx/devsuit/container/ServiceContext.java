@@ -28,6 +28,8 @@ public class ServiceContext<ORDER, RESULT extends StandardResult> implements Ser
 	
 	private Map<String, Object> attributes = new HashMap<String, Object>(); 
 	
+	private Map<String, String> activeTrace = new HashMap<>();
+	
 	private Logger logger;
 	
 	private Exception exception;
@@ -83,8 +85,8 @@ public class ServiceContext<ORDER, RESULT extends StandardResult> implements Ser
 		return result;
 	}
 
-	public void setResult(RESULT result) {
-		this.result = result;
+	public void setResult(StandardResult result) {
+		this.result = (RESULT) result;
 	}
 
 	public void putAttributes(String key, Object object) {
@@ -94,7 +96,11 @@ public class ServiceContext<ORDER, RESULT extends StandardResult> implements Ser
 		attributes.put(key, object);
 	}
 
-	public <C> C getAttributes(String key) {
+	public Map<String, Object> getAttributes() {
+		return attributes;
+	}
+	
+	public <C> C getAttributesValue(String key) {
 		return (C) this.attributes.get(key);
 	}
 
@@ -128,6 +134,21 @@ public class ServiceContext<ORDER, RESULT extends StandardResult> implements Ser
 		
 		entityObject.convertFrom(order, ignore);
 		return (T) entityObject;
+	}
+
+	public String getActiveTraceValue(String key) {
+		return activeTrace.get(key);
+	}
+	
+	public Map getActiveTrace() {
+		return activeTrace;
+	}
+
+	public void putActiveTrace(String key, String value) {
+		Assert.hasText(value); 	
+		Assert.hasText(key);
+		
+		activeTrace.put(key, value);
 	}
 	
 }
