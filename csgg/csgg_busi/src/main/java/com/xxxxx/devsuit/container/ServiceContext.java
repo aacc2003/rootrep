@@ -36,8 +36,8 @@ public class ServiceContext<ORDER, RESULT extends StandardResult> implements Ser
 	
 	private OperationContext opContext;
 	
-	public ServiceContext(OperationContext context, ORDER param) {
-		this.opContext = context;
+	public ServiceContext(OperationContext opContext, ORDER param) {
+		this.opContext = opContext;
 		this.order = param;
 	}
 

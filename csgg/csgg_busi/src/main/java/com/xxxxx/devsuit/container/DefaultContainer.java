@@ -3,10 +3,13 @@ package com.xxxxx.devsuit.container;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.xxxxx.devsuit.container.event.BeforeServiceEvent;
+import com.xxxxx.devsuit.container.event.FinishServiceEvent;
 import com.xxxxx.devsuit.container.event.InitEvent;
 import com.xxxxx.devsuit.container.monitor.system.LogSystemListener;
 import com.xxxxx.devsuit.container.monitor.system.PreparedSystemListener;
@@ -33,13 +36,6 @@ public class DefaultContainer implements Container, InitializingBean {
 	private ThreadPoolTaskExecutor threadPoolTaskExecutor;
 	
 	private Map<String, InvokeElement> invokeElements = new ConcurrentHashMap<String, InvokeElement>();
-
-	@Override
-	public <ORDER, RESULT extends StandardResult> RESULT execute(ORDER order, String serviceName,
-			OperationContext opContext) {
-		
-		return null;
-	}
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
@@ -71,6 +67,52 @@ public class DefaultContainer implements Container, InitializingBean {
 			throw new RuntimeException("初始化container出错:DBPlugin=null");
 		}
 	}
+
+	@Override
+	public <ORDER, RESULT extends StandardResult> RESULT execute(ORDER order, String serviceName,
+			OperationContext opContext) {
+		
+		ServiceContext<ORDER, RESULT> context = new ServiceContext<ORDER, RESULT>(opContext, order);
+		try {
+			
+			context.setCurrentTimestamp(dbPlugin.currentTime());
+			context.setBegin(System.currentTimeMillis());
+			
+			InvokeElement invokeElement = invokeElements.get(serviceName);
+			if (null == invokeElement) {
+				throw new RuntimeException("未加载到服务，服务名："+serviceName);
+			}
+			
+			context.setInvokeElement(invokeElement);
+			notifierBus.dispatcher(new BeforeServiceEvent(this, context));
+			
+			invokeElement.getInvokeService().before(context);
+			invokeElement.getInvokeService().invoke(context);
+			invokeElement.getInvokeService().after(context);
+			
+		} catch(Throwable e) {
+			//TODO 
+		} finally {
+			InvokeElement invokeElement = context.getInvokeElement();
+			if (null != invokeElement) {
+				try {
+					invokeElement.getInvokeService().end(context);
+				} catch (Throwable e) {
+					Logger logger = context.getLogger();
+					logger.error("执行服务：{}得end()方法出错：{}", serviceName, e);
+				} finally {
+					notifierBus.dispatcher(new FinishServiceEvent(this, context));
+				}
+			}
+		}
+		
+		return context.getResult();
+	}
+
+//  ----------------------------------------------------------------------------------
+	
+	
+//	-----------------------------------------------------------------------------------
 
 	public DomainFactory getDomainFactory() {
 		return domainFactory;
