@@ -2,7 +2,7 @@ package com.xxxxx.devsuit.container.monitor.system;
 
 import com.xxxxx.devsuit.container.ServiceContext;
 import com.xxxxx.devsuit.container.event.InitEvent;
-import com.xxxxx.devsuit.container.event.RunServiceEvent;
+import com.xxxxx.devsuit.container.event.BeforeServiceEvent;
 import com.xxxxx.devsuit.domain.DomainFactory;
 import com.xxxxx.devsuit.domainobj.EntityObject;
 import com.xxxxx.devsuit.enums.Code;
@@ -13,7 +13,7 @@ import com.xxxxx.devsuit.result.StandardResult;
 public class PreparedSystemListener {
 
 	@Subscribe(priority=2, isAsync=false)
-	public void preparedResult(RunServiceEvent event) {
+	public void preparedResult(BeforeServiceEvent event) {
 		
 		try {
 			ServiceContext<?, ?> context = event.value();
@@ -29,7 +29,7 @@ public class PreparedSystemListener {
 	}
 	
 	@Subscribe(priority=3, isAsync=false)
-	public void preparedEntityObject(RunServiceEvent event) {
+	public void preparedEntityObject(BeforeServiceEvent event) {
 		try {
 			ServiceContext<?, ?> context = event.value();
 			EntityObject entity = context.getInvokeElement().newEntityObject();

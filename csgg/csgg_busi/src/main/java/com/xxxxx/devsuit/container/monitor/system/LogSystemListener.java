@@ -10,13 +10,13 @@ import org.slf4j.Logger;
 import com.xxxxx.devsuit.container.ServiceContext;
 import com.xxxxx.devsuit.container.event.FinishServiceEvent;
 import com.xxxxx.devsuit.container.event.InitEvent;
-import com.xxxxx.devsuit.container.event.RunServiceEvent;
+import com.xxxxx.devsuit.container.event.BeforeServiceEvent;
 import com.xxxxx.devsuit.event.Subscribe;
 
 public class LogSystemListener {
 
 	@Subscribe(priority=1, isAsync=false)
-	public void startLog(RunServiceEvent event) {
+	public void startLog(BeforeServiceEvent event) {
 		
 		ServiceContext<?, ?> serviceContext = event.value();
 		Logger logger = serviceContext.getLogger();
