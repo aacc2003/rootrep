@@ -13,4 +13,6 @@ public interface InvokeService<ORDER, RESULT extends StandardResult> extends Bea
 	public void after(ServiceContext<ORDER, RESULT> serviceContext);
 	
 	public void end(ServiceContext<ORDER, RESULT> serviceContext);
+	
+	String getInvockServiceName();
 }

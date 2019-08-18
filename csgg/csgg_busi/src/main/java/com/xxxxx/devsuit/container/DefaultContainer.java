@@ -8,6 +8,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import com.alibaba.druid.util.StringUtils;
 import com.xxxxx.devsuit.container.event.BeforeServiceEvent;
 import com.xxxxx.devsuit.container.event.FinishServiceEvent;
 import com.xxxxx.devsuit.container.event.InitEvent;
@@ -110,7 +111,44 @@ public class DefaultContainer implements Container, InitializingBean {
 	}
 
 //  ----------------------------------------------------------------------------------
+	public String getLogName(InvokeService invokeService, Invoker invoker) {
+		String logName = invoker.logName();
+		if (StringUtils.isEmpty(logName)) {
+			String n =  invokeService.getClass().getSimpleName();
+			if (n.endsWith(INVOKE_SERVICE_SUFFIX)) {
+				logName = n.substring(0, n.indexOf(INVOKE_SERVICE_SUFFIX));
+			} else {
+				logName = n;
+			}
+		}
+		
+		return logName;
+	}
 	
+	private void checkInvokeService(InvokeService invokeService) {
+		Class<InvokeService> invokeServiceClass = (Class<InvokeService>)invokeService.getClass();
+		Invoker _invoker = invokeServiceClass.getAnnotation(Invoker.class);
+		if (null == _invoker) {
+			throw new RuntimeException(
+					String.format("InvokeService->%s配置错误,@invok注解不可为空", invokeService.getInvockServiceName()));
+		}
+		
+		String serviceName = _invoker.serviceName();
+		InvokeElement invokeElementOri = invokeElements.get(serviceName);
+		if (null != invokeElementOri) {
+			throw new RuntimeException(
+					String.format("InvokeService->%s配置错误,服务名冲突:(invokeServiceOri:%s - serviceNameOri:%s)", 
+							invokeService.getInvockServiceName(), invokeElementOri, serviceName));
+		}
+	}
+	
+	private Class getEntityClass(Class entity) {
+		Class tar = null;
+		if (null!=entity && Void.class!=entity && void.class!=entity) {
+			tar = entity;
+		}
+		return tar;
+	}
 	
 //	-----------------------------------------------------------------------------------
 
@@ -120,6 +158,18 @@ public class DefaultContainer implements Container, InitializingBean {
 
 	public void setDomainFactory(DomainFactory domainFactory) {
 		this.domainFactory = domainFactory;
+	}
+
+	public void setDbPlugin(DBPlugin dbPlugin) {
+		this.dbPlugin = dbPlugin;
+	}
+
+	public void setTransactionManager(PlatformTransactionManager transactionManager) {
+		this.transactionManager = transactionManager;
+	}
+
+	public void setThreadPoolTaskExecutor(ThreadPoolTaskExecutor threadPoolTaskExecutor) {
+		this.threadPoolTaskExecutor = threadPoolTaskExecutor;
 	}
 	
 }
