@@ -1,9 +1,14 @@
 package com.xxxxx.devsuit.container;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -21,6 +26,8 @@ import com.xxxxx.devsuit.event.NotifierBus;
 import com.xxxxx.devsuit.result.StandardResult;
 
 public class DefaultContainer implements Container, InitializingBean {
+	
+	public final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	private static final String INVOKE_SERVICE_SUFFIX = "InvokeService";
 	
@@ -148,6 +155,42 @@ public class DefaultContainer implements Container, InitializingBean {
 			tar = entity;
 		}
 		return tar;
+	}
+	
+	private String getResultTypeName(Class<InvokeService> invokeServiceClass) {
+		try {
+			
+			do {
+				
+				Type genericType = invokeServiceClass.getGenericSuperclass();
+				if (genericType instanceof ParameterizedType) {
+					Type[] types = ((ParameterizedType)genericType).getActualTypeArguments();
+					if (null == types || types.length != 2) {
+						throw new RuntimeException(String.format("InvockService->%s范型配置错误，泛型参数数量不为2", invokeServiceClass.getName()));
+					}
+					
+					Type resultType = types[1];
+					String typeName = null;
+					
+					if (resultType instanceof Class) {
+						typeName = ((Class) resultType).getName();
+						if (null == typeName || typeName == Void.class.getName() || typeName == void.class.getName()) {
+							typeName = null;
+							logger.warn("InvockService->%s范型配置警告，result类型为空", invokeServiceClass.getName());
+						} else {
+							typeName = ( (Class<?>) ((ParameterizedType)resultType).getRawType() ).getName();
+						}
+						
+						return typeName;
+					}
+				}
+				
+			} while(InvokeService.class.isAssignableFrom(invokeServiceClass)) ;
+			
+			throw new RuntimeException(String.format("InvockService->%s范型配置错误，未找到result", invokeServiceClass.getName()));
+		} catch (Exception e) {
+			throw new RuntimeException(String.format("InvockService->%s范型配置错误，异常:%s", invokeServiceClass.getName(), e));
+		}
 	}
 	
 //	-----------------------------------------------------------------------------------
