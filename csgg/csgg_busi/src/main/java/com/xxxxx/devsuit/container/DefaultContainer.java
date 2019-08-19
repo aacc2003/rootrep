@@ -99,7 +99,8 @@ public class DefaultContainer implements Container, InitializingBean {
 			invokeElement.getInvokeService().after(context);
 			
 		} catch(Throwable e) {
-			//TODO 
+			//TODO 集中异常处理机制
+			throw new RuntimeException(e);
 		} finally {
 			InvokeElement invokeElement = context.getInvokeElement();
 			if (null != invokeElement) {
@@ -118,6 +119,28 @@ public class DefaultContainer implements Container, InitializingBean {
 	}
 
 //  ----------------------------------------------------------------------------------
+	public void registerInvokeService(InvokeService invokeService) {
+		checkInvokeService(invokeService);
+		Class<InvokeService> invokeServiceClass = (Class<InvokeService>) invokeService.getClass();
+		
+		Invoker invoker = invokeServiceClass.getAnnotation(Invoker.class);
+		String serviceName = invoker.serviceName();
+		String resultType = getResultTypeName(invokeServiceClass);
+		Class entity = getEntityClass(invoker.entityType());
+		boolean isAsync = invoker.isAsync();
+		boolean isEntityInjectSpringBeans = invoker.isEntityInjectSpringBeans();
+		Invoker.SerialLock serialLock = invoker.lock();
+		Invoker.TransactionAttribute transactionAttribute = invoker.transactionAttribute();
+		String logName = invoker.logName();
+		
+		InvokeElement invokeElement = InvokeElementFactory.getInvokeElementFactory().newInvokeElement(serviceName, logName, 
+				invokeService, entity, resultType, isAsync, serialLock, transactionAttribute, isEntityInjectSpringBeans);
+		
+		invokeElement.setInvokeService(new InvokServiceProxyFactory());
+		
+		invokeElements.put(serviceName, invokeElement);
+	}
+	
 	public String getLogName(InvokeService invokeService, Invoker invoker) {
 		String logName = invoker.logName();
 		if (StringUtils.isEmpty(logName)) {
