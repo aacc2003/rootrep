@@ -20,6 +20,7 @@ import com.xxxxx.devsuit.container.event.InitEvent;
 import com.xxxxx.devsuit.container.monitor.system.LogSystemListener;
 import com.xxxxx.devsuit.container.monitor.system.PreparedSystemListener;
 import com.xxxxx.devsuit.container.monitor.system.ThreadHolderListner;
+import com.xxxxx.devsuit.container.proxy.InvokeServiceProxyFactory;
 import com.xxxxx.devsuit.domain.DBPlugin;
 import com.xxxxx.devsuit.domain.DomainFactory;
 import com.xxxxx.devsuit.event.NotifierBus;
@@ -137,7 +138,8 @@ public class DefaultContainer implements Container, InitializingBean {
 		InvokeElement invokeElement = InvokeElementFactory.getInvokeElementFactory().newInvokeElement(serviceName, logName, 
 				invokeService, entity, resultType, isAsync, serialLock, transactionAttribute, isEntityInjectSpringBeans);
 		
-		invokeElement.setInvokeService(new InvokServiceProxyFactory());
+		invokeElement.setInvokeService(new InvokeServiceProxyFactory(transactionManager, dbPlugin, threadPoolTaskExecutor, 
+				invokeElement).createInvokeServiceProxy());
 		
 		invokeElements.put(serviceName, invokeElement);
 	}

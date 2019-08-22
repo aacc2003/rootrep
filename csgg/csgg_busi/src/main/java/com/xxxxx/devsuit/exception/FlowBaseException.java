@@ -1,7 +1,7 @@
 package com.xxxxx.devsuit.exception;
 
 /**
- * 容器异常
+ * 流程容器异常基类
  * 
  * 定义为容器启动时候发生的异常，不需要错误码信息，故直接继承RuntimeException
  * 
