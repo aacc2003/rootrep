@@ -10,6 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 
 import com.xxxxx.devsuit.domainobj.DomainObject;
 import com.xxxxx.devsuit.event.NotifierBus;
+import com.xxxxx.devsuit.exception.ContainerBaseException;
 
 public class DomainFactory implements ApplicationContextAware {
 	
@@ -28,10 +29,10 @@ public class DomainFactory implements ApplicationContextAware {
 	public DomainFactory(NotifierBus notifierBus, SqlSessionTemplate sqlSessionTemplate, 
 			BizNoCreator bizNoCreator) {
 		if (null == sqlSessionTemplate) {
-			throw new RuntimeException("初始化DomainFactory出错SqlSessionTemplate不可为空");
+			throw new ContainerBaseException("初始化DomainFactory出错SqlSessionTemplate不可为空");
 		}
 		if (null == bizNoCreator) {
-			throw new RuntimeException("初始化DomainFactory出错BizNoCreator不可为空");
+			throw new ContainerBaseException("初始化DomainFactory出错BizNoCreator不可为空");
 		}
 		this.notifierBus = notifierBus;
 		this.sqlSessionTemplate = sqlSessionTemplate;

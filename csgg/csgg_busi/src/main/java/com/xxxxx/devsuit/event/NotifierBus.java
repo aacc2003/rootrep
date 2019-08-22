@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.util.CollectionUtils;
 
+import com.xxxxx.devsuit.exception.ContainerBaseException;
+
 public class NotifierBus implements Notifier {
 	
 	public final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -97,7 +99,7 @@ public class NotifierBus implements Notifier {
 				}
 			}
 		} catch (Exception e) {
-			throw new RuntimeException(String.format("注册监听器过程中出现错误，target=%s.", listener), e);
+			throw new ContainerBaseException(String.format("注册监听器过程中出现错误，target=%s.", listener), e);
 		} finally {
 			lock.writeLock().unlock();
 		}
@@ -107,14 +109,14 @@ public class NotifierBus implements Notifier {
 		Class<?>[] paramTypes = method.getParameterTypes();
 		for (Class<?> paramType : paramTypes) {
 			if (paramType.isArray()) {
-				throw new RuntimeException(String.format("监听事件不支持数组类型,请使用集合,method=%s",
+				throw new ContainerBaseException(String.format("监听事件不支持数组类型,请使用集合,method=%s",
 						method.getDeclaringClass().getName() + "#" + method.getName()));
 			}
 		}
 		
 		Class<?> returnType = method.getReturnType();
 		if (returnType != void.class) {
-			throw new RuntimeException(String.format("监听事件非法返回值returnType=%s", returnType.getName()));
+			throw new ContainerBaseException(String.format("监听事件非法返回值returnType=%s", returnType.getName()));
 		}
 		
 		return paramTypes;
@@ -232,7 +234,7 @@ public class NotifierBus implements Notifier {
 				dispacher.equals(new Dispatcher.DispatcherTask(subscriber, events));
 			}
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new ContainerBaseException(e);
 		} finally {
 			lock.readLock().unlock();
 		}

@@ -3,6 +3,7 @@ package com.xxxxx.devsuit.domainobj;
 import java.util.Date;
 
 import com.xxxxx.devsuit.domain.BizNoCreator;
+import com.xxxxx.devsuit.exception.ContainerBaseException;
 
 public abstract class EntityObject extends DomainObjectValidator {
 
@@ -18,7 +19,7 @@ public abstract class EntityObject extends DomainObjectValidator {
 	
 	public void createIdentity(String seqName) {
 		if (bizNoCreator == null) {
-			throw new RuntimeException(String.format("序列号生存器bizNoCreator尚未初始化，不支持的操作..."));
+			throw new ContainerBaseException(String.format("序列号生存器bizNoCreator尚未初始化，不支持的操作..."));
 		}
 		
 		this.identity = bizNoCreator.getSeq(seqName);
@@ -26,7 +27,7 @@ public abstract class EntityObject extends DomainObjectValidator {
 	
 	public String createBizNo(String seqName, boolean isOverrideIdentity, String prefix) {
 		if (bizNoCreator == null) {
-			throw new RuntimeException(String.format("序列号生存器bizNoCreator尚未初始化，不支持的操作..."));
+			throw new ContainerBaseException(String.format("序列号生存器bizNoCreator尚未初始化，不支持的操作..."));
 		}
 		
 		long seq = bizNoCreator.getSeq(seqName);

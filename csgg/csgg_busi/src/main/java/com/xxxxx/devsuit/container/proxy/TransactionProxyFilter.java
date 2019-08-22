@@ -10,6 +10,9 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.xxxxx.devsuit.container.InvokeElement;
 import com.xxxxx.devsuit.container.Invoker;
+import com.xxxxx.devsuit.exception.ContainerBaseException;
+import com.xxxxx.devsuit.exception.SuspendException;
+import com.xxxxx.devsuit.exception.UnkownException;
 
 public class TransactionProxyFilter extends BaseProxyFilter {
 	
@@ -29,7 +32,7 @@ public class TransactionProxyFilter extends BaseProxyFilter {
 		Invoker.SerialLock lock = invokeElement.getSerialLock();
 		
 		if (null == transactionAttribute && (null != lock && lock.isLock()) ) {
-			throw new RuntimeException(String.format("TransactionAttribute->(%s)与SerialLock->(%s)配置冲突", transactionAttribute, lock));
+			throw new ContainerBaseException(String.format("TransactionAttribute->(%s)与SerialLock->(%s)配置冲突", transactionAttribute, lock));
 		}
 		
 		if (null != transactionManager && ( (null!=lock && lock.isLock()) || transactionAttribute.isTx() ) ) {

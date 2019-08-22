@@ -5,6 +5,8 @@ import java.util.GregorianCalendar;
 
 import org.springframework.util.StringUtils;
 
+import com.xxxxx.devsuit.exception.ContainerBaseException;
+
 public class BizNoCreatorImpl implements BizNoCreator {
 	
 	private static final String FILL_STRING = "00000000";
@@ -13,7 +15,7 @@ public class BizNoCreatorImpl implements BizNoCreator {
 	
 	public BizNoCreatorImpl(DBPlugin dbPlugin) {
 		if (dbPlugin == null) {
-			throw new RuntimeException("初始化BizNoCreator出错，DBPlugin不能为空");
+			throw new ContainerBaseException("初始化BizNoCreator出错，DBPlugin不能为空");
 		}
 		
 		this.dbPlugin = dbPlugin;
@@ -22,7 +24,7 @@ public class BizNoCreatorImpl implements BizNoCreator {
 	@Override
 	public String createBizNo(long seq, String bizPrefix) {
 		if (!StringUtils.hasText(bizPrefix)) {
-			throw new RuntimeException("生成bizNo出错，bizPrefix不能为空");
+			throw new ContainerBaseException("生成bizNo出错，bizPrefix不能为空");
 		}
 		
 		StringBuilder sb = new StringBuilder();

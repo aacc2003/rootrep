@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.xxxxx.devsuit.container.InvokeElement;
+import com.xxxxx.devsuit.exception.ContainerBaseException;
 
 public class AsyncProxyFilter extends BaseProxyFilter {
 	
@@ -37,7 +38,7 @@ public class AsyncProxyFilter extends BaseProxyFilter {
 						} catch (Throwable e) {
 							
 							logger.error("service:{},异步任务执行过程中出现错误. {}", invokeElement.getServiceName(), e);
-							throw new RuntimeException(e);
+							throw new ContainerBaseException(e);
 						}
 					}
 				});
@@ -46,7 +47,7 @@ public class AsyncProxyFilter extends BaseProxyFilter {
 			} 
 			
 		} catch (Throwable e) {
-			throw new RuntimeException(e);
+			throw new ContainerBaseException(e);
 		}
 		
 		return null;

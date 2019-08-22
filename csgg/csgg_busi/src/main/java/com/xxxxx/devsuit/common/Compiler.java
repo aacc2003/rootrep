@@ -5,6 +5,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.codehaus.janino.SimpleCompiler;
 
+import com.xxxxx.devsuit.exception.ContainerBaseException;
+
 import javassist.CannotCompileException;
 import javassist.ClassClassPath;
 import javassist.ClassPath;
@@ -41,7 +43,7 @@ public class Compiler {
 			
 			return targetType;
 		} catch (Exception e) {
-			throw new RuntimeException(String.format("动态编译出错，className=%s src=%s", className, src), e);
+			throw new ContainerBaseException(String.format("动态编译出错，className=%s src=%s", className, src), e);
 		}
 	}
 	
@@ -64,7 +66,7 @@ public class Compiler {
 			CtClass ctClass = ctPool.makeClass(subClassName);
 			return ctClass;
 		} catch(Exception e) {
-			throw new RuntimeException(String.format("创建CtClass过程中出错supperClass = %s", supperClass), e);
+			throw new ContainerBaseException(String.format("创建CtClass过程中出错supperClass = %s", supperClass), e);
 		}
 	}
 	
@@ -72,7 +74,7 @@ public class Compiler {
 		try {
 			ctClass.addMethod(CtNewMethod.make(src, ctClass));
 		} catch (Exception e) {
-			throw new RuntimeException(
+			throw new ContainerBaseException(
 					String.format("方法织入过程中出现错误supperClass = %s,methodDefinition = %s", supperClass, src), e);
 		}
 		//重复装饰
@@ -90,7 +92,7 @@ public class Compiler {
 				target = (T) constructor.newInstance(parameters);
 			}
 		} catch (Exception e) {
-			throw new RuntimeException(String.format("构建过程中出现错误CtClass=%s", ctClass), e);
+			throw new ContainerBaseException(String.format("构建过程中出现错误CtClass=%s", ctClass), e);
 		}
 		return target;
 	}
@@ -109,7 +111,7 @@ public class Compiler {
 		try {
 			ctClass.addConstructor(CtNewConstructor.make(constructor, ctClass));
 		} catch (CannotCompileException e) {
-			throw new RuntimeException(
+			throw new ContainerBaseException(
 					String.format("构建过程中出现错误supperClass = %s, class = %s,constructorDefinition = %s", supperClass, ctClass, constructor), e);
 		}
 	}
@@ -132,7 +134,7 @@ public class Compiler {
 			
 			ctClass.addField(ctField);
 		} catch (Exception e) {
-			throw new RuntimeException(String.format("构建field失败.field:%s,ctClass:%s", field, ctClass.getName()), e);
+			throw new ContainerBaseException(String.format("构建field失败.field:%s,ctClass:%s", field, ctClass.getName()), e);
 		}
 	}
 	

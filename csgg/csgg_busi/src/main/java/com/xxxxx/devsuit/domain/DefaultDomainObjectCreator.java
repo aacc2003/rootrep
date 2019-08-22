@@ -6,6 +6,7 @@ import com.xxxxx.devsuit.domainobj.AbstractDomain;
 import com.xxxxx.devsuit.domainobj.DomainObject;
 import com.xxxxx.devsuit.domainobj.EntityObject;
 import com.xxxxx.devsuit.event.NotifierBus;
+import com.xxxxx.devsuit.exception.ContainerBaseException;
 
 public class DefaultDomainObjectCreator extends DomainObjectCreator {
 	
@@ -30,9 +31,9 @@ public class DefaultDomainObjectCreator extends DomainObjectCreator {
 	        }
 	        return domainObject;
 		} catch (InstantiationException e) {
-			throw new  RuntimeException(e);
+			throw new  ContainerBaseException(e);
 		} catch (IllegalAccessException e) {
-			throw new  RuntimeException(e);
+			throw new  ContainerBaseException(e);
 		}	
 	}
 

@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.xxxxx.devsuit.exception.ContainerBaseException;
+
 import javassist.CtClass;
 
 public abstract class SubscriberWrapper implements Comparable<SubscriberWrapper> {
@@ -70,7 +72,7 @@ public abstract class SubscriberWrapper implements Comparable<SubscriberWrapper>
 				.newInstance(ct, null, null);
 			
 		} catch(Exception e) {
-			throw new RuntimeException(e);
+			throw new ContainerBaseException(e);
 		}
 	}
 	

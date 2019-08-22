@@ -2,7 +2,7 @@ package com.xxxxx.devsuit.enums;
 
 public interface Code {
 
-	/** 内部系统异常错误 */
+	/** 内部系统异常错误 == 未知错误 */
 	public static final String ERROR_CODE_NEST = "comm_03_0000";
 	
 	/** 未知错误 */

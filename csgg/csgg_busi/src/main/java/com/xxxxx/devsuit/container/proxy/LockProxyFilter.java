@@ -5,6 +5,7 @@ import org.aopalliance.intercept.MethodInvocation;
 import com.xxxxx.devsuit.container.InvokeElement;
 import com.xxxxx.devsuit.container.Invoker;
 import com.xxxxx.devsuit.domain.DBPlugin;
+import com.xxxxx.devsuit.exception.ContainerBaseException;
 
 public class LockProxyFilter extends BaseProxyFilter {
 	
@@ -38,7 +39,7 @@ public class LockProxyFilter extends BaseProxyFilter {
 			
 			methodInvocation.proceed(); 
 		} catch(Throwable e) {
-			throw new RuntimeException(e);
+			throw new ContainerBaseException(e);
 		}
 		
 		return null;

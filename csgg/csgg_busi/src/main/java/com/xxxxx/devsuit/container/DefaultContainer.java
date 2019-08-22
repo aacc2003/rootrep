@@ -23,6 +23,7 @@ import com.xxxxx.devsuit.container.monitor.system.ThreadHolderListner;
 import com.xxxxx.devsuit.domain.DBPlugin;
 import com.xxxxx.devsuit.domain.DomainFactory;
 import com.xxxxx.devsuit.event.NotifierBus;
+import com.xxxxx.devsuit.exception.ContainerBaseException;
 import com.xxxxx.devsuit.result.StandardResult;
 
 public class DefaultContainer implements Container, InitializingBean {
@@ -66,13 +67,13 @@ public class DefaultContainer implements Container, InitializingBean {
 	private void initCheck() {
 		
 //		if (null == exceptionMonitor) {
-//			throw new RuntimeException("初始化container出错:ExceptionMonitor=null");
+//			throw new ContainerException("初始化container出错:ExceptionMonitor=null");
 //		}
 		
 		notifierBus = new NotifierBus(threadPoolTaskExecutor);
 		
 		if (null == dbPlugin) {
-			throw new RuntimeException("初始化container出错:DBPlugin=null");
+			throw new ContainerBaseException("初始化container出错:DBPlugin=null");
 		}
 	}
 
@@ -88,7 +89,7 @@ public class DefaultContainer implements Container, InitializingBean {
 			
 			InvokeElement invokeElement = invokeElements.get(serviceName);
 			if (null == invokeElement) {
-				throw new RuntimeException("未加载到服务，服务名："+serviceName);
+				throw new ContainerBaseException("未加载到服务，服务名："+serviceName);
 			}
 			
 			context.setInvokeElement(invokeElement);
@@ -100,7 +101,7 @@ public class DefaultContainer implements Container, InitializingBean {
 			
 		} catch(Throwable e) {
 			//TODO 集中异常处理机制
-			throw new RuntimeException(e);
+			throw new ContainerBaseException(e);
 		} finally {
 			InvokeElement invokeElement = context.getInvokeElement();
 			if (null != invokeElement) {
@@ -159,14 +160,14 @@ public class DefaultContainer implements Container, InitializingBean {
 		Class<InvokeService> invokeServiceClass = (Class<InvokeService>)invokeService.getClass();
 		Invoker _invoker = invokeServiceClass.getAnnotation(Invoker.class);
 		if (null == _invoker) {
-			throw new RuntimeException(
+			throw new ContainerBaseException(
 					String.format("InvokeService->%s配置错误,@invok注解不可为空", invokeService.getInvockServiceName()));
 		}
 		
 		String serviceName = _invoker.serviceName();
 		InvokeElement invokeElementOri = invokeElements.get(serviceName);
 		if (null != invokeElementOri) {
-			throw new RuntimeException(
+			throw new ContainerBaseException(
 					String.format("InvokeService->%s配置错误,服务名冲突:(invokeServiceOri:%s - serviceNameOri:%s)", 
 							invokeService.getInvockServiceName(), invokeElementOri, serviceName));
 		}
@@ -189,7 +190,7 @@ public class DefaultContainer implements Container, InitializingBean {
 				if (genericType instanceof ParameterizedType) {
 					Type[] types = ((ParameterizedType)genericType).getActualTypeArguments();
 					if (null == types || types.length != 2) {
-						throw new RuntimeException(String.format("InvockService->%s范型配置错误，泛型参数数量不为2", invokeServiceClass.getName()));
+						throw new ContainerBaseException(String.format("InvockService->%s范型配置错误，泛型参数数量不为2", invokeServiceClass.getName()));
 					}
 					
 					Type resultType = types[1];
@@ -210,9 +211,9 @@ public class DefaultContainer implements Container, InitializingBean {
 				
 			} while(InvokeService.class.isAssignableFrom(invokeServiceClass)) ;
 			
-			throw new RuntimeException(String.format("InvockService->%s范型配置错误，未找到result", invokeServiceClass.getName()));
+			throw new ContainerBaseException(String.format("InvockService->%s范型配置错误，未找到result", invokeServiceClass.getName()));
 		} catch (Exception e) {
-			throw new RuntimeException(String.format("InvockService->%s范型配置错误，异常:%s", invokeServiceClass.getName(), e));
+			throw new ContainerBaseException(String.format("InvockService->%s范型配置错误，异常:%s", invokeServiceClass.getName(), e));
 		}
 	}
 	

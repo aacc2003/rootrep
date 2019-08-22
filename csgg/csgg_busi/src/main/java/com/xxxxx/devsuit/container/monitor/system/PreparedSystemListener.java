@@ -8,6 +8,7 @@ import com.xxxxx.devsuit.domainobj.EntityObject;
 import com.xxxxx.devsuit.enums.Code;
 import com.xxxxx.devsuit.enums.Status;
 import com.xxxxx.devsuit.event.Subscribe;
+import com.xxxxx.devsuit.exception.ContainerBaseException;
 import com.xxxxx.devsuit.result.StandardResult;
 
 public class PreparedSystemListener {
@@ -24,7 +25,7 @@ public class PreparedSystemListener {
 			
 			context.setResult(result);
 		} catch (Exception e) {
-			throw new RuntimeException("初始化result出错："+e);
+			throw new ContainerBaseException("初始化result出错："+e);
 		}
 	}
 	
@@ -41,7 +42,7 @@ public class PreparedSystemListener {
 			
 			context.setEntityObject(entity);
 		} catch (Exception e) {
-			throw new RuntimeException("构建entity对象出错："+e);
+			throw new ContainerBaseException("构建entity对象出错："+e);
 		}
 	}
 	
