@@ -1,7 +1,5 @@
 package com.xxxxx.devsuit.container.proxy;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.TransactionDefinition;
