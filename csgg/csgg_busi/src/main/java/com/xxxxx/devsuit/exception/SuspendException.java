@@ -24,4 +24,14 @@ public class SuspendException extends BizBaseException {
 	public SuspendException(String description, String verbose) {
 		super(Status.PROCESSING.code(), Code.ERROR_CODE_SUPPEND, description, verbose);
 	}
+	
+	public SuspendException(Throwable e) {super(e);}
+	
+	public SuspendException(String description, Throwable e) {
+		super(Status.PROCESSING.code(), Code.ERROR_CODE_SUPPEND, description, e);
+	}
+	
+	public SuspendException(String description, String verbose, Throwable e) {
+		super(Status.PROCESSING.code(), Code.ERROR_CODE_SUPPEND, description, verbose, e);
+	}
 }

@@ -8,9 +8,12 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 import com.xxxxx.devsuit.container.InvokeElement;
 import com.xxxxx.devsuit.container.Invoker;
+import com.xxxxx.devsuit.exception.BusinessException;
 import com.xxxxx.devsuit.exception.ContainerBaseException;
 import com.xxxxx.devsuit.exception.SuspendException;
 import com.xxxxx.devsuit.exception.UnkownException;
+import com.xxxxx.devsuit.enums.Code;
+import com.xxxxx.devsuit.enums.Status;
 
 public class TransactionProxyFilter extends BaseProxyFilter {
 	
@@ -63,6 +66,13 @@ public class TransactionProxyFilter extends BaseProxyFilter {
 			}
 			
 			transactionManager.rollback(status);
+		} else {
+			try{
+				methodInvocation.proceed();
+			}catch(Throwable e){
+				throw new BusinessException(Status.UNKOWN.code(), Code.ERROR_CODE_UNKOWN, "InvokeService过滤链TransactionProxyFilter异常:"
+						+e.getMessage(), e);
+			}
 		}
 		
 		return null;

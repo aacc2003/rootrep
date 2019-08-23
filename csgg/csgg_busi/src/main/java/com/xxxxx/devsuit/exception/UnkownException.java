@@ -25,4 +25,14 @@ public class UnkownException extends BizBaseException {
 	public UnkownException(String status, String code, String description, String verbose) {
 		super(Status.UNKOWN.code(), Code.ERROR_CODE_UNKOWN, description, verbose);
 	}
+	
+	public UnkownException(Throwable e) {super(e);}
+	
+	public UnkownException(String status, String code, String description, Throwable e) {
+		super(Status.UNKOWN.code(), Code.ERROR_CODE_UNKOWN, description, e);
+	}
+	
+	public UnkownException(String status, String code, String description, String verbose, Throwable e) {
+		super(Status.UNKOWN.code(), Code.ERROR_CODE_UNKOWN, description, verbose, e);
+	}
 }

@@ -29,10 +29,26 @@ public class BizBaseException extends RuntimeException {
 	public BizBaseException(){super();}
 	
 	public BizBaseException(String status, String code, String description) {
-		this(status, code, description, null);
+		this(status, code, description, (String)null);
 	}
 	
 	public BizBaseException(String status, String code, String description, String verbose) {
+		super();
+		this.status = status;
+		this.code = code;
+		this.description = description;
+		this.verbose = verbose;
+	}
+	
+	// 完善异常栈
+	public BizBaseException(Throwable e){super(e);}
+	
+	public BizBaseException(String status, String code, String description, Throwable e) {
+		this(status, code, description, null, e);
+	}
+	
+	public BizBaseException(String status, String code, String description, String verbose, Throwable e) {
+		super(e);
 		this.status = status;
 		this.code = code;
 		this.description = description;

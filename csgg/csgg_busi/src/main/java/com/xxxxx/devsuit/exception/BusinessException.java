@@ -19,4 +19,14 @@ public class BusinessException extends BizBaseException {
 	public BusinessException(String status, String code, String description, String verbose) {
 		super(status, code, description, verbose);
 	}
+	
+	public BusinessException(Throwable e) {super(e);}
+	
+	public BusinessException(String status, String code, String description, Throwable e) {
+		super(status, code, description, e);
+	}
+	
+	public BusinessException(String status, String code, String description, String verbose, Throwable e) {
+		super(status, code, description, verbose, e);
+	}
 }

@@ -18,4 +18,9 @@ public class IllegalParameterException extends BizBaseException {
 		super(Status.FAIL.getCode(), Code.ERROR_CODE_ILLEGA_PARAMETER, description);
 	}
 	
+	public IllegalParameterException(Throwable e) {super(e);}
+	
+	public IllegalParameterException(String description, Throwable e) {
+		super(Status.FAIL.getCode(), Code.ERROR_CODE_ILLEGA_PARAMETER, description, e);
+	}
 }

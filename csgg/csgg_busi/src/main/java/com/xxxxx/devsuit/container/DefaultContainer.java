@@ -1,7 +1,5 @@
 package com.xxxxx.devsuit.container;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.Map;
@@ -9,6 +7,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -24,6 +23,7 @@ import com.xxxxx.devsuit.container.proxy.InvokeServiceProxyFactory;
 import com.xxxxx.devsuit.domain.DBPlugin;
 import com.xxxxx.devsuit.domain.DomainFactory;
 import com.xxxxx.devsuit.event.NotifierBus;
+import com.xxxxx.devsuit.exception.BizBaseException;
 import com.xxxxx.devsuit.exception.ContainerBaseException;
 import com.xxxxx.devsuit.result.StandardResult;
 
@@ -78,6 +78,7 @@ public class DefaultContainer implements Container, InitializingBean {
 		}
 	}
 
+	// 幂等放在invoke方法中自行处理。	原因：在重试场景下，触发幂等后，可能会继续业务逻辑执行
 	@Override
 	public <ORDER, RESULT extends StandardResult> RESULT execute(ORDER order, String serviceName,
 			OperationContext opContext) {
@@ -101,8 +102,8 @@ public class DefaultContainer implements Container, InitializingBean {
 			invokeElement.getInvokeService().after(context);
 			
 		} catch(Throwable e) {
-			//TODO 集中异常处理机制
-			throw new ContainerBaseException(e);
+//			throw new BizBaseException(e);
+			BeanUtils.copyProperties(context.getResult(), e);
 		} finally {
 			InvokeElement invokeElement = context.getInvokeElement();
 			if (null != invokeElement) {
