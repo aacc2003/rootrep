@@ -16,7 +16,7 @@ public class BeanCopyUtils {
     /**
      * 该方法没有自定义Converter,简单进行常规属性拷贝
      * --一般类型是深拷贝
-     * --对象属性A a;  方式是：只找到类型肯名字一致，浅拷贝
+     * --对象属性A a;  方式是：只找到类型肯名字一致，浅拷贝（enum也是浅拷贝）
      *
      * @param srcObj  源对象
      * @param destObj 目标对象
