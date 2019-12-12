@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.csgg.CsggBootMain;
+import com.xxxxx.app.App;
 
 /**
  */
@@ -29,6 +30,6 @@ public class TestAppBase extends TestWebBase {
 	
 	static {
 		System.setProperty("yiji.dubbo.provider.register", "false");
-		Apps.setProfileIfNotExists(PROFILE);
+		App.setProfileIfNotExists(PROFILE);
 	}
 }

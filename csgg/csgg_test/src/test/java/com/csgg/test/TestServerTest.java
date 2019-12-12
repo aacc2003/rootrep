@@ -3,6 +3,8 @@ package com.csgg.test;
 
 import javax.annotation.Resource;
 
+import org.junit.Test;
+
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.csgg.service.api.TestServer;
 import com.csgg.test.base.TestBase;
@@ -18,6 +20,7 @@ public class TestServerTest extends TestBase {
 	@Reference
 	private TestServer	testR;
 	
+	@Test
 	public void testTestS() {
 		String p = "khd";
 		
