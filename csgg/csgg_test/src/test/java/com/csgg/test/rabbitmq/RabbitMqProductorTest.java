@@ -11,7 +11,8 @@ public class RabbitMqProductorTest {
 	static String exchange = "source";
 	public static void main(String[] args) throws IOException, TimeoutException {
 		ConnectionFactory cf = new ConnectionFactory();
-		cf.setAutomaticRecoveryEnabled(false);
+//		cf.setAutomaticRecoveryEnabled(false);
+		cf.setAutomaticRecoveryEnabled(true);
 		
 		Connection cn = cf.newConnection();
 		
