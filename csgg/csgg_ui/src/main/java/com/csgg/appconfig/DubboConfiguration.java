@@ -110,6 +110,7 @@ System.out.println("-------------dubbo monitor:");
 		return config;
 	}
 	
+//	2.1.7 parent 已经实现了
 	@Bean
 	public DubboHealthIndicator dubboHealthIndicator() {
 System.out.println("-------------dubbo indicator:");

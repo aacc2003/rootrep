@@ -1,6 +1,11 @@
 
 package com.csgg.test;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -30,7 +35,44 @@ public class TestServerTest extends TestBase {
 		System.out.println(result);
 	}
 	
+	enum Key {
+		A, B, C, D
+	}
+	
+	static Map<Key, String> map = new HashMap<Key, String>();
+	static {
+	map.put(Key.A, "a");
+	map.put(Key.B, "b");
+	map.put(Key.C, "c");
+	map.put(Key.D, "d");
+	}
+	
+	
 	public static void main(String[] args) {
-		new TestServerTest().testTestS();
+//		new TestServerTest().testTestS();
+		
+		String str = "qwertyuioplkjhgfdsazxcvbnm09876543211qazxsw23edcvfr45tgbnhy67ujm,ki89ol.;p0!QUJJDYFGWKKCMNCGDJJDHFUHDNDJEIKJ"
+				+"qwertyuioplkjhgfdsazxcvbnm09876543211qazxsw23edcvfr45tgbnhy67ujm,ki89ol.;p0!QUJJDYFGWKKCMNCGDJJDHFUHDNDJEIKJ"
+				+"qwertyuioplkjhgfdsazxcvbnm09876543211qazxsw23edcvfr45tgbnhy67ujm,ki89ol.;p0!QUJJDYFGWKKCMNCGDJJDHFUHDNDJEIKJ"
+				+"qwertyuioplkjhgfdsazxcvbnm09876543211qazxsw23edcvfr45tgbnhy67ujm,ki89ol.;p0!QUJJDYFGWKKCMNCGDJJDHFUHDNDJEIKJ"
+				+"qwertyuioplkjhgfdsazxcvbnm09876543211qazxsw23edcvfr45tgbnhy67ujm,ki89ol.;p0!QUJJDYFGWKKCMNCGDJJDHFUHDNDJEIKJ"
+				+"qwertyuioplkjhgfdsazxcvbnm09876543211qazxsw23edcvfr45tgbnhy67ujm,ki89ol.;p0!QUJJDYFGWKKCMNCGDJJDHFUHDNDJEIKJ";
+		
+		List<String> arrayList = new ArrayList<String>();
+//		for  (int i=0; i<1000000; i++) {
+		int i=0;
+		while (true) {
+			
+				System.out.println("---"+i);
+				arrayList.add(str+"---"+i);//占用内存
+				new TestServerTest(); // 垃圾对象
+			i++;
+			try {
+				Thread.currentThread().sleep(1L);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 }
