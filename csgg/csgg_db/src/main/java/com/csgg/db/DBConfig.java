@@ -17,8 +17,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
-@Configuration
-@ConditionalOnBean(name="DBProperties")
+// for shardingjdbc
+//@Configuration
+//@ConditionalOnBean(name="DBProperties")
 public class DBConfig {
 
 	@Autowired

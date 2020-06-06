@@ -13,7 +13,8 @@ import com.alibaba.druid.pool.vendor.MySqlValidConnectionChecker;
 import com.alibaba.druid.pool.vendor.OracleValidConnectionChecker;
 import com.xxxxx.env.Env;
 
-@Component
+//for shardingjdbc 
+//@Component
 public class DBProperties {
 	
 	private static final int ORACLE_MAX_ACTIVE = 200;

@@ -110,12 +110,13 @@ System.out.println("-------------dubbo monitor:");
 		return config;
 	}
 	
+//	// for shardingjdbc
 //	2.1.7 parent 已经实现了
-	@Bean
-	public DubboHealthIndicator dubboHealthIndicator() {
-System.out.println("-------------dubbo indicator:");
-		return new DubboHealthIndicator();
-	}
+//	@Bean
+//	public DubboHealthIndicator dubboHealthIndicator() {
+//System.out.println("-------------dubbo indicator:");
+//		return new DubboHealthIndicator();
+//	}
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {

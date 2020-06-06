@@ -150,10 +150,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-messaging</artifactId>
 		</dependency>
+		<!-- // for shardingjdbc 
 		<dependency>
 			<groupId>org.springframework.amqp</groupId>
 			<artifactId>spring-rabbit</artifactId>
 		</dependency>
+		-->
 		
 		<dependency>
 			<groupId>com.101tec</groupId>
