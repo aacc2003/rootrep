@@ -52,7 +52,7 @@ System.out.println("-------------dubbo registry:");
 //		config.setProtocol("dubbo");
 		
 		config.setRegister(true);
-		config.setAddress("zookeeper://127.0.0.1:2181");
+		config.setAddress("zookeeper://192.168.0.104:2181");
 		config.setFile("/var/dubbo/dubbo.cache");
 		return config;
 	}
