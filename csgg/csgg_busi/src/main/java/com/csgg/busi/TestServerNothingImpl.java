@@ -18,7 +18,7 @@ import com.csgg.service.api.TestServer;
  */
 //@WebService(endpointInterface = "com.csgg.service.api.TestServer")
 @Service(version="1.0", interfaceClass = TestServer.class)
-@Component("testnohingtS")
+//@Component("testnohingtS")
 public class TestServerNothingImpl implements TestServer
 	
 {

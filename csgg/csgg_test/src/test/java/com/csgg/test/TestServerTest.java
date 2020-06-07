@@ -22,8 +22,8 @@ import com.csgg.test.base.TestBase;
 public class TestServerTest extends TestBase {
 //public class TestServerTest {
 
-	@Resource(name="testServerCxf")
-	@Reference
+	@Resource(name="testServer")
+	@Reference(version="1.0")
 	private TestServer	testR;
 	
 	@Test

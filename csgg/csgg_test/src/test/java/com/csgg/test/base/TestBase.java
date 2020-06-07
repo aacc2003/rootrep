@@ -9,12 +9,13 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.core.env.Environment;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 /**
  */
 @SuppressWarnings("deprecation")
-//@ContextConfiguration(locations = { "classpath:/spring/applicationContext-test-remote.xml"})
+@ContextConfiguration(locations = { "classpath:/integration-dubbo-test.xml"})
 @RunWith(SpringJUnit4ClassRunner.class)
 public class TestBase implements ApplicationContextAware, EnvironmentAware {
 	

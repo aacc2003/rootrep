@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <!--&lt;!&ndash;服务提供方&ndash;&gt;-->
+    <!--<dubbo:application name="customer"/>-->
+    <!--&lt;!&ndash;注册中心暴露地址&ndash;&gt;-->
+    <!--<dubbo:registry address="zookeeper://localhost:2181"/>-->
+    <!--&lt;!&ndash;暴露服务端口号&ndash;&gt;-->
+    <!--<dubbo:protocol name="dubbo" port="20902"/>-->
+
+    <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+    <dubbo:application name="csgg-dubbo-test"/>
+    <!-- 使用multicast广播注册中心暴露发现服务地址 -->
+    <dubbo:registry address="zookeeper://192.168.0.104:2181"/>
+
+    <dubbo:reference id="testServer"
+                     interface="com.csgg.service.api.TestServer"
+                     version="1.0"/>
+</beans>
