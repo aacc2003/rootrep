@@ -96,6 +96,12 @@
     </dependency>
 
     <dependency>
+        <groupId>org.apache.shardingsphere</groupId>
+	<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+	<version>4.0.0-RC1</version>
+    </dependency>
+
+    <dependency>
         <groupId>org.springframework</groupId>
         <artifactId>spring-tx</artifactId>
         <version>4.2.6.RELEASE</version>
@@ -378,12 +384,19 @@
           <!-- dangdang sharding jdbc -->
           <!--注意观察父项目的pom.xml文件，如果下面两个boot-starter同时出现，orchestration将失效-->
           <!--sharding-jdbc-spring-boot-starter注释掉之后，orchestration将生效-->
+<!--
           <dependency>
               <groupId>io.shardingsphere</groupId>
               <artifactId>sharding-jdbc-spring-boot-starter</artifactId>
               <version>3.0.0</version>
           </dependency>
+-->
 
+          <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.47</version>
+            </dependency>
 
           <!-- for spring namespace -->
           <dependency>

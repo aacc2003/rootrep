@@ -15,11 +15,11 @@ import com.csgg.service.api.TestServer;
 import com.csgg.test.base.TestBase;
 
 /**
- * test1
+ * test
  * @author Administrator
  *
  */
-public class TestServerTest extends TestBase {
+public class TestServerTest2 extends TestBase {
 //public class TestServerTest {
 
 	@Resource(name="testServer")
@@ -27,7 +27,7 @@ public class TestServerTest extends TestBase {
 	private TestServer	testR;
 	
 	@Test
-	public void testTestS() {
+	public void testTestS2() {
 		String p = "khd";
 		
 		String result = testR.testS(p);
@@ -65,7 +65,7 @@ public class TestServerTest extends TestBase {
 			
 				System.out.println("---"+i);
 				arrayList.add(str+"---"+i);//占用内存
-				new TestServerTest(); // 垃圾对象
+				new TestServerTest2(); // 垃圾对象
 			i++;
 			try {
 				Thread.currentThread().sleep(1L);
